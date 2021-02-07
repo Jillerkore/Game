@@ -16,6 +16,10 @@ public abstract class Creature extends Entity {
     private float speed;
     private boolean walking = false, attacking = false;
 
+    private long lastAttackTime = 0, currentAttackTime = 0;
+    private float attackCooldown = 800;
+
+    protected float elapsedTime;
     protected BigCreatureAnimation animation;
 
     public int getHealth() { return health; }
@@ -101,23 +105,27 @@ public abstract class Creature extends Entity {
     }
 
     public void attack() {
-        Rectangle attackCollisionRect = new Rectangle(0, 0, 20, 20);
+        if (isAttacking()) {
+            Rectangle attackCollisionRect = new Rectangle(0, 0, 20, 20);
 
-        if (getDirection() == Direction.EAST) {
-            attackCollisionRect.setLocation((int)getX() + collisionWidth, (int)getY() + collisionHeight);
-        }else if (getDirection() == Direction.WEST) {
-            attackCollisionRect.setLocation((int)getX() - 20, (int)getY() + collisionHeight);
-        }else if (getDirection() == Direction.NORTH) {
-            attackCollisionRect.setLocation((int)getX() + 6, (int)getY() + collisionHeight + 20);
-        }else if (getDirection() == Direction.SOUTH) {
-            attackCollisionRect.setLocation((int)getX() + 6, (int)getY() - 20);
-        }
+            if (getDirection() == Direction.EAST) {
+                attackCollisionRect.setLocation((int)getX() + collisionWidth, (int)getY() + collisionHeight);
+            }else if (getDirection() == Direction.WEST) {
+                attackCollisionRect.setLocation((int)getX() - 20, (int)getY() + collisionHeight);
+            }else if (getDirection() == Direction.NORTH) {
+                attackCollisionRect.setLocation((int)getX() + 6, (int)getY() + collisionHeight + 20);
+            }else if (getDirection() == Direction.SOUTH) {
+                attackCollisionRect.setLocation((int)getX() + 6, (int)getY() - 20);
+            }
 
-        for (Entity entity : EntityManager.getInstance().activeEntityList()) {
-            if (entity == this) continue;
-            if (entity instanceof Teleporter) continue;
-            if (entity.getCollisionBox().intersects(attackCollisionRect))
-                System.out.println("Attacked: " + entity);
+            boolean isAttackingEntity = false;
+            for (Entity entity : EntityManager.getInstance().activeEntityList()) {
+                if (entity == this) continue;
+                if (entity instanceof Teleporter) continue;
+                if (entity.getCollisionBox().intersects(attackCollisionRect)) {
+                }
+
+            }
         }
     }
 

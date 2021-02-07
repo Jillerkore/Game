@@ -8,8 +8,6 @@ import me.dev.killerjore.textureRepository.SkeletonTextureRepo;
 
 public class Skeleton extends Creature{
 
-    private float elapsedTime;
-
     public Skeleton(float x, float y, int width, int height, int collisionWidth, int collisionHeight, int health, int maxHealth, int minHealth, int stamina, int maxStamina, int minStamina, float speed) {
         super(x, y, width, height, collisionWidth, collisionHeight, health, maxHealth, minHealth, stamina, maxStamina, minStamina, speed);
 

@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import me.dev.killerjore.animations.bigCreaturesAnimation.animations.PlayerAnimation;
-import me.dev.killerjore.entities.Entity;
 import me.dev.killerjore.entities.EntityManager;
 import me.dev.killerjore.entities.statics.Teleporter;
 import me.dev.killerjore.textureRepository.PlayerTextureRepo;
@@ -17,7 +16,6 @@ public class Player extends Creature {
 
     private EntityManager entityManager;
 
-    private float elapsedTime;
     private OrthographicCamera camera;
 
     private int attackCooldown = 800;
