@@ -1,4 +1,4 @@
-package me.dev.killerjore.entities.creatures;
+package me.dev.killerjore.entities.creature.creatures;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import me.dev.killerjore.animations.bigCreaturesAnimation.animations.PlayerAnimation;
 import me.dev.killerjore.entities.EntityManager;
+import me.dev.killerjore.entities.creature.Creature;
 import me.dev.killerjore.entities.statics.Teleporter;
 import me.dev.killerjore.textureRepository.PlayerTextureRepo;
 import me.dev.killerjore.utils.Direction;
@@ -20,9 +21,9 @@ public class Player extends Creature {
 
     private int attackCooldown = 800;
 
-    public Player(float x, float y, int width, int height, int collisionWidth, int collisionHeight, int minHealth, int maxHealth, int health, int minStamina, int maxStamina, int stamina, OrthographicCamera camera) {
+    public Player(float x, float y, int width, int height, int collisionWidth, int collisionHeight, int maxHealth, int health, int maxStamina, int stamina, OrthographicCamera camera) {
 
-        super(x, y, width, height, collisionWidth, collisionHeight, health, maxHealth, minHealth, stamina, maxStamina, minStamina, 120f);
+        super(x, y, width, height, collisionWidth, collisionHeight, health, maxHealth, stamina, maxStamina, 120f);
         this.camera = camera;
 
         entityManager = EntityManager.getInstance();

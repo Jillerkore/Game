@@ -8,94 +8,27 @@ import me.dev.killerjore.utils.Direction;
 
 import java.awt.*;
 
-public abstract class Entity {
-
-    // X and Y is the actual bottom left coordinate of the player while Offset X and Offset Y is
-    // the Bottom left cornor of the Player's texture. The dimension of x and y is 32x64 but the
-    // dimension of the offset X and offset Y is 64x64. Hope that makes sense haha
-    private float x, y, offsetX, offsetY;
-    private int width, height;
-
-    protected final int collisionWidth, collisionHeight;
-
-    private Rectangle collisionBound;
-
-    // If false, EntityManager will remove this entity from the entity list and the entity will stop
-    // getting rendered.
-    private boolean isActive;
-
-    private Direction direction;
-
-    // Massive mess of getters and setters
-    public int getWidth() {
-        return width;
-    }
-    public void setWidth(int width) {
-        this.width = width;
-    }
-    public int getHeight() {
-        return height;
-    }
-    public void setHeight(int height) {
-        this.height = height;
-    }
-    public float getX() {
-        return x;
-    }
-    public void setX(float x) {
-        this.x = x;
-    }
-    public float getY() {
-        return y;
-    }
-    public void setY(float y) {
-        this.y = y;
-    }
-    public float getOffsetX() {
-        return offsetX;
-    }
-    public void setOffsetX(float offsetX) {
-        this.offsetX = offsetX;
-    }
-    public float getOffsetY() {
-        return offsetY;
-    }
-    public void setOffsetY(float offsetY) {
-        this.offsetY = offsetY;
-    }
-    public Rectangle getCollisionBox() {
-        return collisionBound;
-    }
-    public boolean isActive() {
-        return isActive;
-    }
-    public void setActive(boolean active) {
-        this.isActive = active;
-    }
-    public Direction getDirection() {
-        return direction;
-    }
-    public void setDirection(Direction direction) {
-        this.direction = direction;
-    }
+public abstract class Entity extends EntityAbstract {
 
     public Entity(float x, float y, int width, int height, int collisionWidth, int collisionHeight) {
 
-        this.offsetX = x;
-        this.offsetY = y;
-        this.width = width;
-        this.height = height;
+        setX(x + 16);
+        setY(y);
+        setOffsetX(x);
+        setOffsetY(y);
 
-        this.x = offsetX + 16;
-        this.y = offsetY;
+        setWidth(width);
+        setHeight(height);
+
+        setDirection(Direction.EAST);
+        setActive(true);
 
         this.collisionWidth = collisionWidth;
         this.collisionHeight = collisionHeight;
 
         collisionBound = new Rectangle((int) x, (int) y, collisionWidth, collisionHeight);
-
-        isActive = true;
     }
+
     public boolean isCollidingWithEntity(Rectangle collisionRectangle) {
         boolean colliding = false;
         // Iterates through every entity in the active entity list
@@ -112,7 +45,7 @@ public abstract class Entity {
     }
 
     public boolean isCollidingWithTile(TiledMap tiledMap) {
-        boolean bolin = false;
+        boolean colliding = false;
 
         // All of the collidable tiles in the game are on Map Layer 2 (1 in terms of index value)
         // That's why I am setting layer to tiledMap.getLayers().get(1)
@@ -125,7 +58,7 @@ public abstract class Entity {
         depending on the direction the player is looking at.
          */
 
-        switch (direction) {
+        switch (getDirection()) {
             case EAST:
                 leftCornor = layer.getCell((int) (getX() + 20) / 32, (int) (getY()) / 32);
                 rightCornor = layer.getCell((int) (getX() + 20) / 32, (int) (getY() + 14) / 32);
@@ -147,21 +80,22 @@ public abstract class Entity {
         if (leftCornor != null) {
             // Checks if the left cornor is colliding with a tile with the key "Collidable"
             if (leftCornor.getTile().getProperties().containsKey("collidable")) {
-                bolin = true;
+                colliding = true;
             }
         }
         if (rightCornor != null) {
             // Checks if the right cornor is colliding with a tile with the key "collidable"
             if (rightCornor.getTile().getProperties().containsKey("collidable")) {
-                bolin = true;
+                colliding = true;
             }
         }
-        return bolin;
+        return colliding;
     }
-
-    // Updates the collision Box to match with the player's x and y
-    // The + collisionHeight makes sure the coordinates of the rectangle is on the Y-Up coordinate system
-    // I set libgdx to use Y-Down system however, the rectangle class in java awt uses Y-Down :/
+    /*
+    Updates the collision Box to match with the player's x and y
+    The + collisionHeight makes sure the coordinates of the rectangle is on the Y-Up coordinate system
+    I set libgdx to use Y-Down system however, the rectangle class in java awt uses Y-Down :/
+    */
     public void updateCollisionBox() {
         this.collisionBound = new Rectangle((int) getX(), (int) getY() + collisionHeight, collisionWidth, collisionHeight);
     }

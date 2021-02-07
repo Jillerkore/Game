@@ -11,14 +11,17 @@ public class HotbarUI {
     private Texture hotbarTexture;
 
     public HotbarUI() {
-        this.x = 20;
-        this.y = 25;
+        this.x = 100;
+        this.y = 15;
+
+        this.width = 400;
+        this.height = 42;
 
         hotbarTexture = new Texture("sprites/ui/hotBar.png");
     }
 
     public void render(SpriteBatch batch) {
-        batch.draw(hotbarTexture, x, y);
+        batch.draw(hotbarTexture, x, y, width,height);
     }
 
     public void dispose() {

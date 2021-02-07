@@ -4,12 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import me.dev.killerjore.entities.EntityManager;
-import me.dev.killerjore.entities.creatures.Player;
+import me.dev.killerjore.entities.creature.creatures.Player;
 
 public class StaminaBarUI extends BarUI{
 
     public StaminaBarUI() {
-        super(5, Gdx.graphics.getHeight() - 38 - 30, 5 + 15, Gdx.graphics.getHeight() - 38 - 20 - 6, new Texture("sprites/ui/middleStaminaBox.png"), new Texture("sprites/ui/emptyBar.png"));
+        super(5, Gdx.graphics.getHeight() - 40 - 30, 5 + 15, Gdx.graphics.getHeight() - 40 - 20 - 6, new Texture("sprites/ui/middleStaminaBox.png"), new Texture("sprites/ui/emptyBar.png"));
     }
 
     @Override
@@ -21,7 +21,7 @@ public class StaminaBarUI extends BarUI{
 
         float x = this.barPosX;
 
-        float staminaToPercent = (float) player.getStamina() / player.getMaxStamina() * 100;
+        float staminaToPercent = (float) player.getProperties().getStamina() / player.getProperties().getMaxStamina() * 100;
         int divideTo20 = Math.round(staminaToPercent / 5);
 
         for (int i = 0; i < divideTo20; i++) {

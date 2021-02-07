@@ -2,7 +2,7 @@ package me.dev.killerjore.entities;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import me.dev.killerjore.entities.creatures.Player;
+import me.dev.killerjore.entities.creature.creatures.Player;
 import me.dev.killerjore.world.WorldType;
 
 import java.util.ArrayList;
@@ -44,9 +44,7 @@ public class EntityManager {
             entities = starterCaveEntities;
         }
 
-        try {
-            entities.removeIf(entity -> !entity.isActive());
-        } catch(Exception ignored) {} // Ignore any concurrent exception cause we dont have to worry bout those
+        entities.removeIf(entity -> !entity.isActive());
     }
 
     public void renderAllEntities(Batch batch, TiledMap tiledMap) {

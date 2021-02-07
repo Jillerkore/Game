@@ -1,4 +1,4 @@
-package me.dev.killerjore.entities.creatures;
+package me.dev.killerjore.entities.creature;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -12,28 +12,15 @@ import java.awt.*;
 
 public abstract class Creature extends Entity {
 
-    private int health, maxHealth, minHealth, stamina, maxStamina, minStamina;
-    private float speed;
+    protected CreatureProperties properties;
     private boolean walking = false, attacking = false;
-
-    private long lastAttackTime = 0, currentAttackTime = 0;
-    private float attackCooldown = 800;
 
     protected float elapsedTime;
     protected BigCreatureAnimation animation;
 
-    public int getHealth() { return health; }
-    public void setHealth(int health) { this.health = health; }
-    public int getMaxHealth() { return maxHealth; }
-    public void setMaxHealth(int health) { this.maxHealth = health; }
-    public int getMinHealth() { return minHealth; }
-    public void setMinHealth(int health) { this.minHealth = health; }
-    public int getStamina() { return stamina; }
-    public void setStamina(int stamina) { this.stamina = stamina; }
-    public int getMaxStamina() { return maxStamina; }
-    public void setMaxStamina(int maxStamina) { this.maxStamina = maxStamina; }
-    public void setMinStamina(int minStamina) { this.minStamina = minStamina; }
-    public int getMinStamina() { return minStamina; }
+    public CreatureProperties getProperties() {
+        return properties;
+    }
 
     public boolean isWalking() { return walking; }
     public void setWalking(boolean walking) { this.walking = walking; }
@@ -41,25 +28,22 @@ public abstract class Creature extends Entity {
     public void setAttacking(boolean attacking) { this.attacking = attacking; }
 
 
-    public Creature(float x, float y, int width, int height, int collisionWidth, int collisionHeight, int health, int maxHealth, int minHealth, int stamina, int maxStamina, int minStamina, float speed) {
+    public Creature(float x, float y, int width, int height, int collisionWidth, int collisionHeight, int health, int maxHealth, int stamina, int maxStamina, float speed) {
 
         super(x, y, width, height, collisionWidth, collisionHeight);
-        this.health = health;
-        this.minHealth = minHealth;
-        this.maxHealth = maxHealth;
-
-        this.stamina = stamina;
-        this.maxStamina = maxStamina;
-        this.minStamina = minStamina;
-
+        properties = new CreatureProperties();
+        properties.setHealth(health);
+        properties.setMaxHealth(maxHealth);
+        properties.setStamina(stamina);
+        properties.setMaxStamina(maxStamina);
+        properties.setSpeed(speed);
         setDirection(Direction.EAST);
-        this.speed = speed;
     }
 
     protected void moveX(TiledMap tiledMap) {
         if (getDirection() == Direction.EAST) {
             float oldX = getOffsetX();
-            setOffsetX(getOffsetX() + speed * Gdx.graphics.getDeltaTime());
+            setOffsetX(getOffsetX() + properties.getSpeed() * Gdx.graphics.getDeltaTime());
             updatePos();
             updateCollisionBox();
             // Checks collision for EAST
@@ -69,7 +53,7 @@ public abstract class Creature extends Entity {
         }
         if (getDirection() == Direction.WEST) {
             float oldX = getOffsetX();
-            setOffsetX(getOffsetX() - speed * Gdx.graphics.getDeltaTime());
+            setOffsetX(getOffsetX() - properties.getSpeed() * Gdx.graphics.getDeltaTime());
             updatePos();
             updateCollisionBox();
             // Checks collision for WEST
@@ -83,7 +67,7 @@ public abstract class Creature extends Entity {
     public void moveY(TiledMap tiledMap) {
         if (getDirection() == Direction.NORTH) {
             float oldY = getOffsetY();
-            setOffsetY(getOffsetY() + speed * Gdx.graphics.getDeltaTime());
+            setOffsetY(getOffsetY() + properties.getSpeed() * Gdx.graphics.getDeltaTime());
             updatePos();
             updateCollisionBox();
             if (isCollidingWithTile(tiledMap) || isCollidingWithEntity(getCollisionBox())) {
@@ -92,7 +76,7 @@ public abstract class Creature extends Entity {
         }
         if (getDirection() == Direction.SOUTH) {
             float oldY = getOffsetY();
-            setOffsetY(getOffsetY() - speed * Gdx.graphics.getDeltaTime());
+            setOffsetY(getOffsetY() - properties.getSpeed() * Gdx.graphics.getDeltaTime());
             updatePos();
             updateCollisionBox();
             // Checks Collision for SOUTH

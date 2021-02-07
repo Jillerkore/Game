@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import me.dev.killerjore.entities.EntityManager;
-import me.dev.killerjore.entities.creatures.Player;
+import me.dev.killerjore.entities.creature.creatures.Player;
 
 public class HealthBarUI extends BarUI{
 
@@ -21,7 +21,7 @@ public class HealthBarUI extends BarUI{
 
         float x = this.barPosX;
 
-        float healthToPercent = (float) player.getHealth() / player.getMaxHealth() * 100;
+        float healthToPercent = (float) player.getProperties().getHealth() / player.getProperties().getMaxHealth() * 100;
         int divideTo20 = Math.round(healthToPercent / 5);
 
         for (int i = 0; i < divideTo20; i++) {

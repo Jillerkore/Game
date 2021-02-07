@@ -7,10 +7,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import me.dev.killerjore.Main;
 import me.dev.killerjore.ui.UIManager;
-import me.dev.killerjore.ui.barUI.BarUIManager;
 import me.dev.killerjore.entities.EntityManager;
-import me.dev.killerjore.entities.creatures.Player;
-import me.dev.killerjore.entities.creatures.Skeleton;
+import me.dev.killerjore.entities.creature.creatures.Player;
+import me.dev.killerjore.entities.creature.creatures.Skeleton;
 import me.dev.killerjore.input.InputHandler;
 import me.dev.killerjore.world.WorldManager;
 
@@ -34,11 +33,9 @@ public class GameScreen implements Screen {
         camera.update();
 
         // Temp player and skeleton objects, going to make their values parsed from files later and a saving system aswell :D
-        Player player = new Player(23 * 32, 23 * 32, 64, 64, 25, 25,0, 20, 20, 0, 20, 20, camera);
-        Skeleton skeleton = new Skeleton(22 * 32, 19 * 32, 64, 64, 25, 25,20, 20, 0, 0, 20, 20, 70);
-        Skeleton skeleton1 = new Skeleton(20 * 32, 19 * 32, 64, 64, 25, 25,20, 20, 0, 0, 20, 20, 70);
+        Player player = new Player(23 * 32, 23 * 32, 64, 64, 25, 25, 20, 20, 20, 20, camera);
+        Skeleton skeleton = new Skeleton(22 * 32, 19 * 32, 64, 64, 25, 25,20, 20, 20, 20, 70);
         EntityManager.getInstance().getStarterWorldEntityList().add(skeleton);
-        EntityManager.getInstance().getStarterWorldEntityList().add(skeleton1);
         EntityManager.getInstance().getStarterWorldEntityList().add(player);
         new InputHandler();
     }
@@ -51,7 +48,6 @@ public class GameScreen implements Screen {
     @Override
     public void render(float delta) {
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
-        EntityManager.getInstance().tick();
         WorldManager.getInstance().getCurrentWorld().render(delta, camera);
         uiSpriteBatch.begin();
         UIManager.getInstance().render(uiSpriteBatch);

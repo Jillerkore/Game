@@ -1,15 +1,16 @@
-package me.dev.killerjore.entities.creatures;
+package me.dev.killerjore.entities.creature.creatures;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import me.dev.killerjore.animations.bigCreaturesAnimation.animations.SkeletonAnimation;
+import me.dev.killerjore.entities.creature.Creature;
 import me.dev.killerjore.textureRepository.SkeletonTextureRepo;
 
-public class Skeleton extends Creature{
+public class Skeleton extends Creature {
 
-    public Skeleton(float x, float y, int width, int height, int collisionWidth, int collisionHeight, int health, int maxHealth, int minHealth, int stamina, int maxStamina, int minStamina, float speed) {
-        super(x, y, width, height, collisionWidth, collisionHeight, health, maxHealth, minHealth, stamina, maxStamina, minStamina, speed);
+    public Skeleton(float x, float y, int width, int height, int collisionWidth, int collisionHeight, int health, int maxHealth, int stamina, int maxStamina, float speed) {
+        super(x, y, width, height, collisionWidth, collisionHeight, health, maxHealth, stamina, maxStamina, speed);
 
         setOffsetX(x);
         setOffsetY(y);
@@ -27,7 +28,7 @@ public class Skeleton extends Creature{
 
         elapsedTime += Gdx.graphics.getDeltaTime();
 
-        if (getHealth() <= 0) {
+        if (properties.getHealth() <= 0) {
             handleDeath();
         }
 
