@@ -17,13 +17,13 @@ public class BigCreatureAnimation {
     private Animation<TextureRegion> upAttackAnimation, downAttackAnimation, leftAttackAnimation, rightAttackAnimation;
     private Animation<TextureRegion> deathAnimation;
 
+    private Animation<TextureRegion> currentAttackAnimation;
+
     private TextureRegion currentFrame;
 
     private static final float frameDurationWalk = 1/7f;
-    private static final float frameDurationAttack = 1/7f;
-    private static final float frameDurationDeath = 1;
-
-    private boolean playedDeathAnimationOnce = false;
+    private static final float frameDurationAttack = 1/11f;
+    private static final float frameDurationDeath = 20;
 
     public BigCreatureAnimation(TextureRepo repo) {
         textures = repo.getTextures();
@@ -94,6 +94,9 @@ public class BigCreatureAnimation {
     public Animation<TextureRegion> getRightAttackAnimation() { return rightAttackAnimation; }
 
     public Animation<TextureRegion> getDeathAnimation() { return deathAnimation; }
+
+    public Animation<TextureRegion> getCurrentAttackAnimtion() { return currentAttackAnimation; }
+    public void setCurrentAttackAnimation(Animation<TextureRegion> animation) { this.currentAttackAnimation = animation; }
 
     public void setCurrentFrame(TextureRegion frame) {
         this.currentFrame = frame;

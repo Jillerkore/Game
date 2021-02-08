@@ -21,7 +21,7 @@ public class HealthBarUI extends BarUI{
 
         float x = this.barPosX;
 
-        float healthToPercent = (float) player.getProperties().getHealth() / player.getProperties().getMaxHealth() * 100;
+        float healthToPercent = (float) player.getHealth() / player.getMaxHealth() * 100;
         int divideTo20 = Math.round(healthToPercent / 5);
 
         for (int i = 0; i < divideTo20; i++) {

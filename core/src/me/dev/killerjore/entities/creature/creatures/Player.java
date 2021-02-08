@@ -1,7 +1,6 @@
 package me.dev.killerjore.entities.creature.creatures;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -19,11 +18,9 @@ public class Player extends Creature {
 
     private OrthographicCamera camera;
 
-    private int attackCooldown = 800;
-
     public Player(float x, float y, int width, int height, int collisionWidth, int collisionHeight, int maxHealth, int health, int maxStamina, int stamina, OrthographicCamera camera) {
 
-        super(x, y, width, height, collisionWidth, collisionHeight, health, maxHealth, stamina, maxStamina, 120f);
+        super(x, y, width, height, collisionWidth, collisionHeight, health, maxHealth, stamina, maxStamina, 120f, 60);
         this.camera = camera;
 
         entityManager = EntityManager.getInstance();
@@ -38,23 +35,26 @@ public class Player extends Creature {
         updatePos();
     }
 
-    private void tick(Batch batch, TiledMap tiledMap) {
-        // Increments delta to a float variable "elapsedTime", gonna need that delta value to play
-        // animation due to the way the Animation class in libgdx works
-        elapsedTime += Gdx.graphics.getDeltaTime();
+    private void tick(TiledMap tiledMap) {
+        /*
+        Increments delta to a float variable "elapsedTime", gonna need that delta value to play
+        animation due to the way the Animation class in libgdx works
+         */
+
+        updateElapsedTimes();
 
         if (isWalking()) {
             handleWalking(tiledMap);
         }
 
         handleWorldTeleporting();
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE))
-            attack();
+        attack();
+        handleAnimations();
     }
 
     @Override
     public void render(Batch batch, TiledMap tiledMap) {
-        tick(batch, tiledMap);
+        tick(tiledMap);
         batch.draw(animation.getCurrentFrame(), getOffsetX(), getOffsetY());
         updateCamera();
     }
@@ -86,10 +86,12 @@ public class Player extends Creature {
     }
 
     private void handleWorldTeleporting() {
-    EntityManager.getInstance().activeEntityList().forEach(entity -> {
-    // Checks if the entity is an instance of the Teleporter class, if true, it'll handle
-            // the teleportation if the enttiy's collision box and the teleporter's collision boxes
-            // are colliding. As simple as that ^_^
+        EntityManager.getInstance().activeEntityList().forEach(entity -> {
+            /*
+            Checks if the entity is an instance of the Teleporter class, if true, it'll handle
+            the teleportation if the enttiy's collision box and the teleporter's collision boxes
+            are colliding. As simple as that ^_^
+            */
             if (entity instanceof Teleporter) {
                 Teleporter teleporter = (Teleporter) entity;
                 if (entity.getCollisionBox().intersects(getCollisionBox())) {
@@ -104,7 +106,5 @@ public class Player extends Creature {
             }
         });
     }
-
-
 
 }

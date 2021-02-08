@@ -13,6 +13,8 @@ import me.dev.killerjore.entities.creature.creatures.Skeleton;
 import me.dev.killerjore.input.InputHandler;
 import me.dev.killerjore.world.WorldManager;
 
+import java.util.ConcurrentModificationException;
+
 public class GameScreen implements Screen {
 
     private Main main;
@@ -52,6 +54,9 @@ public class GameScreen implements Screen {
         uiSpriteBatch.begin();
         UIManager.getInstance().render(uiSpriteBatch);
         uiSpriteBatch.end();
+
+        EntityManager.getInstance().dispose();
+
     }
 
     @Override

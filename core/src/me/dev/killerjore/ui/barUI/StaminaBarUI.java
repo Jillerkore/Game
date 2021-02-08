@@ -21,7 +21,7 @@ public class StaminaBarUI extends BarUI{
 
         float x = this.barPosX;
 
-        float staminaToPercent = (float) player.getProperties().getStamina() / player.getProperties().getMaxStamina() * 100;
+        float staminaToPercent = (float) player.getStamina() / player.getMaxStamina() * 100;
         int divideTo20 = Math.round(staminaToPercent / 5);
 
         for (int i = 0; i < divideTo20; i++) {
