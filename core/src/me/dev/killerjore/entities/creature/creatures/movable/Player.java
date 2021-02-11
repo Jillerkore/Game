@@ -1,4 +1,4 @@
-package me.dev.killerjore.entities.creature.creatures;
+package me.dev.killerjore.entities.creature.creatures.movable;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -6,13 +6,12 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import me.dev.killerjore.animations.bigCreaturesAnimation.animations.PlayerAnimation;
 import me.dev.killerjore.entities.EntityManager;
-import me.dev.killerjore.entities.creature.Creature;
 import me.dev.killerjore.entities.statics.Teleporter;
 import me.dev.killerjore.textureRepository.PlayerTextureRepo;
 import me.dev.killerjore.utils.Direction;
 import me.dev.killerjore.world.WorldManager;
 
-public class Player extends Creature {
+public class Player extends MovableCreature {
 
     private EntityManager entityManager;
 
@@ -40,7 +39,6 @@ public class Player extends Creature {
         Increments delta to a float variable "elapsedTime", gonna need that delta value to play
         animation due to the way the Animation class in libgdx works
          */
-
         updateElapsedTimes();
 
         if (isWalking()) {
@@ -50,6 +48,10 @@ public class Player extends Creature {
         handleWorldTeleporting();
         attack();
         handleAnimations();
+
+        if (getHealth() <= 0) {
+            setActive(false);
+        }
     }
 
     @Override
@@ -60,22 +62,23 @@ public class Player extends Creature {
     }
 
     private void handleWalking(TiledMap tiledMap) {
-        // Checks the direction and sets the position and animation's frame accordingly.
-        if (getDirection() == Direction.EAST) {
-            moveX(tiledMap);
-            animation.setCurrentFrame(animation.getRightAnimation().getKeyFrame(elapsedTime, true));
-        }else if (getDirection() == Direction.WEST) {
-            moveX(tiledMap);
-            animation.setCurrentFrame(animation.getLeftAnimation().getKeyFrame(elapsedTime, true));
-        }
-        else if (getDirection() == Direction.NORTH) {
-            moveY(tiledMap);
-            animation.setCurrentFrame(animation.getUpAnimation().getKeyFrame(elapsedTime, true));
-        }
-        else if (getDirection() == Direction.SOUTH) {
-            moveY(tiledMap);
-            animation.setCurrentFrame(animation.getDownAnimation().getKeyFrame(elapsedTime, true));
-        }
+        if (!isAttacking())
+            // Checks the direction and sets the position and animation's frame accordingly.
+            if (getDirection() == Direction.EAST) {
+                moveX(tiledMap);
+                animation.setCurrentFrame(animation.getRightAnimation().getKeyFrame(elapsedTime, true));
+            }else if (getDirection() == Direction.WEST) {
+                moveX(tiledMap);
+                animation.setCurrentFrame(animation.getLeftAnimation().getKeyFrame(elapsedTime, true));
+            }
+            else if (getDirection() == Direction.NORTH) {
+                moveY(tiledMap);
+                animation.setCurrentFrame(animation.getUpAnimation().getKeyFrame(elapsedTime, true));
+            }
+            else if (getDirection() == Direction.SOUTH) {
+                moveY(tiledMap);
+                animation.setCurrentFrame(animation.getDownAnimation().getKeyFrame(elapsedTime, true));
+            }
         updatePos();
         updateCollisionBox();
     }

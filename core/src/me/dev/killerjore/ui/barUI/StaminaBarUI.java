@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import me.dev.killerjore.entities.EntityManager;
-import me.dev.killerjore.entities.creature.creatures.Player;
+import me.dev.killerjore.entities.creature.creatures.movable.Player;
 
 public class StaminaBarUI extends BarUI{
 

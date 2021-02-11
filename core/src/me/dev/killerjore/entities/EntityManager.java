@@ -2,11 +2,10 @@ package me.dev.killerjore.entities;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import me.dev.killerjore.entities.creature.creatures.Player;
+import me.dev.killerjore.entities.creature.creatures.movable.Player;
 import me.dev.killerjore.world.WorldType;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class EntityManager {
 

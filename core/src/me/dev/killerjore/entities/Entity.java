@@ -60,12 +60,12 @@ public abstract class Entity extends EntityAbstract {
 
         switch (getDirection()) {
             case EAST:
-                leftCornor = layer.getCell((int) (getX() + 20) / 32, (int) (getY()) / 32);
-                rightCornor = layer.getCell((int) (getX() + 20) / 32, (int) (getY() + 14) / 32);
+                leftCornor = layer.getCell((int) (getX() + collisionWidth) / 32, (int) (getY()) / 32);
+                rightCornor = layer.getCell((int) (getX() + collisionWidth) / 32, (int) (getY() + 14) / 32);
                 break;
             case WEST:
                 leftCornor = layer.getCell((int) (getX()) / 32, (int) (getY()) / 32);
-                rightCornor = layer.getCell((int) (getX()) / 32, (int) (getY() + 14) / 32);
+                rightCornor = layer.getCell((int) (getX()) / 32, (int) (getY() + collisionHeight) / 32);
                 break;
             case NORTH:
                 leftCornor = layer.getCell((int) (getX()) / 32, (int) (getY() + 14) / 32);

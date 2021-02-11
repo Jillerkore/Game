@@ -8,12 +8,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import me.dev.killerjore.Main;
 import me.dev.killerjore.ui.UIManager;
 import me.dev.killerjore.entities.EntityManager;
-import me.dev.killerjore.entities.creature.creatures.Player;
-import me.dev.killerjore.entities.creature.creatures.Skeleton;
+import me.dev.killerjore.entities.creature.creatures.movable.Player;
+import me.dev.killerjore.entities.creature.creatures.movable.Skeleton;
 import me.dev.killerjore.input.InputHandler;
 import me.dev.killerjore.world.WorldManager;
-
-import java.util.ConcurrentModificationException;
 
 public class GameScreen implements Screen {
 
