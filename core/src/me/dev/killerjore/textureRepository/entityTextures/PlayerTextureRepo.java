@@ -1,6 +1,8 @@
-package me.dev.killerjore.textureRepository;
+package me.dev.killerjore.textureRepository.entityTextures;
 
-public class PlayerTextureRepo extends TextureRepo{
+import me.dev.killerjore.textureRepository.TextureRepo;
+
+public class PlayerTextureRepo extends TextureRepo {
 
     private static PlayerTextureRepo repo;
     public static PlayerTextureRepo getInstance() { if (repo == null) repo = new PlayerTextureRepo(); return repo; }

@@ -1,7 +1,7 @@
 package me.dev.killerjore.animations.bigCreaturesAnimation.animations;
 
 import me.dev.killerjore.animations.bigCreaturesAnimation.BigCreatureAnimation;
-import me.dev.killerjore.textureRepository.PlayerTextureRepo;
+import me.dev.killerjore.textureRepository.entityTextures.PlayerTextureRepo;
 
 public class PlayerAnimation extends BigCreatureAnimation {
 

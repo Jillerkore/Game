@@ -1,13 +1,12 @@
 package me.dev.killerjore.entities.creature.creatures.movable;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import me.dev.killerjore.animations.bigCreaturesAnimation.animations.PlayerAnimation;
 import me.dev.killerjore.entities.EntityManager;
 import me.dev.killerjore.entities.statics.Teleporter;
-import me.dev.killerjore.textureRepository.PlayerTextureRepo;
+import me.dev.killerjore.textureRepository.entityTextures.PlayerTextureRepo;
 import me.dev.killerjore.utils.Direction;
 import me.dev.killerjore.world.WorldManager;
 

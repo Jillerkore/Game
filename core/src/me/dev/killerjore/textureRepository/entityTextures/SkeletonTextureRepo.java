@@ -1,6 +1,8 @@
-package me.dev.killerjore.textureRepository;
+package me.dev.killerjore.textureRepository.entityTextures;
 
-public class SkeletonTextureRepo extends TextureRepo{
+import me.dev.killerjore.textureRepository.TextureRepo;
+
+public class SkeletonTextureRepo extends TextureRepo {
 
     private static SkeletonTextureRepo repo;
     public static SkeletonTextureRepo getInstance() { if (repo == null) repo = new SkeletonTextureRepo(); return repo; }

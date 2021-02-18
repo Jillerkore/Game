@@ -3,7 +3,7 @@ package me.dev.killerjore.entities.creature.creatures.movable;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import me.dev.killerjore.animations.bigCreaturesAnimation.animations.SkeletonAnimation;
-import me.dev.killerjore.textureRepository.SkeletonTextureRepo;
+import me.dev.killerjore.textureRepository.entityTextures.SkeletonTextureRepo;
 import me.dev.killerjore.utils.Direction;
 
 import java.util.Random;

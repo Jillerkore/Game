@@ -2,8 +2,11 @@ package me.dev.killerjore.animations.bigCreaturesAnimation;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import lombok.Getter;
+import lombok.Setter;
 import me.dev.killerjore.textureRepository.TextureRepo;
 
+@Getter
 public class BigCreatureAnimation {
 
     TextureRegion[][] textures;
@@ -17,9 +20,8 @@ public class BigCreatureAnimation {
     private Animation<TextureRegion> upAttackAnimation, downAttackAnimation, leftAttackAnimation, rightAttackAnimation;
     private Animation<TextureRegion> deathAnimation;
 
-    private Animation<TextureRegion> currentAttackAnimation;
-
-    private TextureRegion currentFrame;
+    private @Setter Animation<TextureRegion> currentAttackAnimation;
+    private @Setter TextureRegion currentFrame;
 
     private static final float frameDurationWalk = 1/7f;
     private static final float frameDurationAttack = 1/11f;
@@ -46,10 +48,10 @@ public class BigCreatureAnimation {
 
         for (int i = 1; i < 9; i++) {
 
-            upFrame[i-1] = textures[8][i];
-            leftFrame[i-1] = textures[9][i];
-            downFrame[i-1] = textures[10][i];
-            rightFrame[i-1] = textures[11][i];
+            upFrame[i - 1] = textures[8][i];
+            leftFrame[i - 1] = textures[9][i];
+            downFrame[i - 1] = textures[10][i];
+            rightFrame[i - 1] = textures[11][i];
 
         }
 
@@ -74,36 +76,4 @@ public class BigCreatureAnimation {
 
         deathAnimation = new Animation<>(frameDurationDeath, deathFrame);
     }
-
-    public Animation<TextureRegion> getUpAnimation() {
-        return upAnimation;
-    }
-    public Animation<TextureRegion> getDownAnimation() {
-        return downAnimation;
-    }
-    public Animation<TextureRegion> getLeftAnimation() {
-        return leftAnimation;
-    }
-    public Animation<TextureRegion> getRightAnimation() {
-        return rightAnimation;
-    }
-
-    public Animation<TextureRegion> getUpAttackAnimation() { return upAttackAnimation; }
-    public Animation<TextureRegion> getDownAttackAnimation() { return downAttackAnimation; }
-    public Animation<TextureRegion> getLeftAttackAnimation() { return leftAttackAnimation; }
-    public Animation<TextureRegion> getRightAttackAnimation() { return rightAttackAnimation; }
-
-    public Animation<TextureRegion> getDeathAnimation() { return deathAnimation; }
-
-    public Animation<TextureRegion> getCurrentAttackAnimtion() { return currentAttackAnimation; }
-    public void setCurrentAttackAnimation(Animation<TextureRegion> animation) { this.currentAttackAnimation = animation; }
-
-    public void setCurrentFrame(TextureRegion frame) {
-        this.currentFrame = frame;
-    }
-    public TextureRegion getCurrentFrame() {
-        return currentFrame;
-    }
-
-
 }

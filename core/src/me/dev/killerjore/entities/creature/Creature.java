@@ -1,7 +1,6 @@
 package me.dev.killerjore.entities.creature;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import me.dev.killerjore.animations.bigCreaturesAnimation.BigCreatureAnimation;
 import me.dev.killerjore.entities.Entity;
 import me.dev.killerjore.entities.EntityManager;
@@ -79,13 +78,13 @@ public abstract class Creature extends CreatureAbstract {
         /*
         Attack animation
          */
-        if (animation.getCurrentAttackAnimtion() == null) return;
-        if (animation.getCurrentAttackAnimtion().isAnimationFinished(attackAnimationElapsedTime)) {
+        if (animation.getCurrentAttackAnimation() == null) return;
+        if (animation.getCurrentAttackAnimation().isAnimationFinished(attackAnimationElapsedTime)) {
             playAttackAnimation = false;
         }
 
         if (playAttackAnimation) {
-            animation.setCurrentFrame(animation.getCurrentAttackAnimtion().getKeyFrame(attackAnimationElapsedTime, true));
+            animation.setCurrentFrame(animation.getCurrentAttackAnimation().getKeyFrame(attackAnimationElapsedTime, true));
         } else {
             attackAnimationElapsedTime = 0;
             setAttacking(false);
