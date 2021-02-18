@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.Pixmap;
 import me.dev.killerjore.screens.GameScreen;
 
-public class Main extends Game {
+public class 	Main extends Game {
 
 	@Override
 	public void create () {

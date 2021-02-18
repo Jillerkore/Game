@@ -2,8 +2,9 @@ package me.dev.killerjore.entities.creature;
 
 import com.badlogic.gdx.Gdx;
 import me.dev.killerjore.animations.bigCreaturesAnimation.BigCreatureAnimation;
-import me.dev.killerjore.entities.Entity;
 import me.dev.killerjore.entities.EntityManager;
+import me.dev.killerjore.event.EventManager;
+import me.dev.killerjore.event.events.entityEvent.EntityAttackEntityEvent;
 import me.dev.killerjore.utils.Direction;
 
 import java.awt.*;
@@ -62,7 +63,8 @@ public abstract class Creature extends CreatureAbstract {
                     if (entity == this) return;
                     if (!(entity instanceof Creature)) return;
                     if (entity.getCollisionBox().intersects(attackCollisionRect)) {
-                        attackEvent(entity);
+                        EntityAttackEntityEvent event = new EntityAttackEntityEvent(this, entity);
+                        EventManager.getInstance().invokeEventMethods(event);
                     }
                 });
             }
@@ -95,9 +97,5 @@ public abstract class Creature extends CreatureAbstract {
         elapsedTime += Gdx.graphics.getDeltaTime();
         attackElapsedTime++;
         attackAnimationElapsedTime += Gdx.graphics.getDeltaTime();
-    }
-
-    public void attackEvent(Entity attackVictim) {
-        ((Creature) attackVictim).setHealth(((Creature) attackVictim).getHealth() - 2);
     }
 }

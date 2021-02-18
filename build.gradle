@@ -49,7 +49,7 @@ project(":desktop") {
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         api "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
 
-        compileOnly "org.projectlombok:lombok:1.16.16"
+        compile "org.projectlombok:lombok:1.16.16"
     }
 
 }

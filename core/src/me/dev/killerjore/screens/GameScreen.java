@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import me.dev.killerjore.Main;
+import me.dev.killerjore.event.EventManager;
 import me.dev.killerjore.ui.UIManager;
 import me.dev.killerjore.entities.EntityManager;
 import me.dev.killerjore.entities.creature.creatures.movable.Player;
@@ -38,6 +39,7 @@ public class GameScreen implements Screen {
         EntityManager.getInstance().getStarterWorldEntityList().add(skeleton);
         EntityManager.getInstance().getStarterWorldEntityList().add(player);
         new InputHandler();
+        EventManager.getInstance();
     }
 
     @Override
