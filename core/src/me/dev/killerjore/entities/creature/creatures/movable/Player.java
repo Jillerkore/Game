@@ -13,8 +13,16 @@ import me.dev.killerjore.world.WorldManager;
 public class Player extends MovableCreature {
 
     private EntityManager entityManager;
-
     private OrthographicCamera camera;
+    private boolean updateCamEachFrame = false;
+
+    public void toggleCameraUpdate() {
+        if (updateCamEachFrame) {
+            updateCamEachFrame = false;
+        }else {
+            updateCamEachFrame = true;
+        }
+    }
 
     public Player(float x, float y, int width, int height, int collisionWidth, int collisionHeight, int maxHealth, int health, int maxStamina, int stamina, OrthographicCamera camera) {
 
@@ -31,6 +39,7 @@ public class Player extends MovableCreature {
         animation.setCurrentFrame(PlayerTextureRepo.getInstance().getTextures()[1][1]);
 
         updatePos();
+        camera.position.set(getX(), getY(), 0);
     }
 
     private void tick(TiledMap tiledMap) {
@@ -78,12 +87,12 @@ public class Player extends MovableCreature {
                 moveY(tiledMap);
                 animation.setCurrentFrame(animation.getDownAnimation().getKeyFrame(elapsedTime, true));
             }
-        updatePos();
-        updateCollisionBox();
     }
 
     private void updateCamera() {
-        camera.position.set(getX(), getY(), 0);
+        if (isWalking() && updateCamEachFrame) {
+            camera.position.set(getOffsetX(), getOffsetY(), 0);
+        }
         camera.update();
     }
 

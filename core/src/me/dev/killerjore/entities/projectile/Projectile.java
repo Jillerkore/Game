@@ -2,13 +2,20 @@ package me.dev.killerjore.entities.projectile;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTile;
+import me.dev.killerjore.entities.Entity;
+import me.dev.killerjore.entities.EntityManager;
+import me.dev.killerjore.event.EventManager;
+import me.dev.killerjore.event.events.projectileEvent.ProjectileHitEntityEvent;
+import me.dev.killerjore.event.events.projectileEvent.ProjectileHitTileEvent;
 import me.dev.killerjore.utils.Direction;
 
 public abstract class Projectile extends ProjectileAbstract {
 
-    public Projectile(float x, float y, int width, int height, int collisionWidth, int collisionHeight, float speed) {
+    public Projectile(float x, float y, int width, int height, int collisionWidth, int collisionHeight, float speed, Direction direction) {
         super(x, y, width, height, collisionWidth, collisionHeight, speed);
-        setSpeed();
+        setSpeed(speed);
+        setDirection(direction);
     }
 
     public void moveX(TiledMap tiledMap) {
@@ -24,9 +31,13 @@ public abstract class Projectile extends ProjectileAbstract {
         if (isCollidingWithTile(tiledMap)) {
             tileCollisionImpact();
         }
-        if (isCollidingWithEntity(getCollisionBox())) {
-            entityCollisionImpact();
+        for (Entity entity : EntityManager.getInstance().activeEntityList()) {
+            if (entity.getCollisionBox().intersects(getCollisionBox())) {
+                entityCollisionImpact(entity);
+                break;
+            }
         }
+
     }
     public void moveY(TiledMap tiledMap) {
         if (getDirection() == Direction.NORTH) {
@@ -41,8 +52,11 @@ public abstract class Projectile extends ProjectileAbstract {
         if (isCollidingWithTile(tiledMap)) {
             tileCollisionImpact();
         }
-        if (isCollidingWithEntity(getCollisionBox())) {
-            entityCollisionImpact();
+        for (Entity entity : EntityManager.getInstance().activeEntityList()) {
+            if (entity.getCollisionBox().intersects(getCollisionBox())) {
+                entityCollisionImpact(entity);
+                break;
+            }
         }
     }
 
@@ -52,9 +66,13 @@ public abstract class Projectile extends ProjectileAbstract {
         updateCollisionBox();
     }
 
-    public abstract void entityCollisionImpact();
-
     public void tileCollisionImpact() {
-        setActive(false);
+        ProjectileHitTileEvent e = new ProjectileHitTileEvent(this);
+        EventManager.getInstance().invokeEventMethods(e);
+    }
+
+    public void entityCollisionImpact(Entity victim) {
+//        ProjectileHitEntityEvent e = new ProjectileHitEntityEvent(this, victim);
+//        EventManager.getInstance().invokeEventMethods(e);
     }
 }

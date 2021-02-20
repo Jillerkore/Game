@@ -18,6 +18,9 @@ public class InputHandler implements InputProcessor {
     @Override
     public boolean keyDown(int keycode) {
 
+        if (Input.Keys.Y == keycode) {
+            entities.getPlayer().toggleCameraUpdate();
+        }
         if (Input.Keys.SPACE == keycode) {
             entities.getPlayer().setAttacking(true);
         }else if (Input.Keys.W == keycode) {

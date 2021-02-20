@@ -2,10 +2,13 @@ package me.dev.killerjore.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import me.dev.killerjore.Main;
+import me.dev.killerjore.entities.Entity;
+import me.dev.killerjore.entities.projectile.projectiles.Fireball;
 import me.dev.killerjore.event.EventManager;
 import me.dev.killerjore.ui.UIManager;
 import me.dev.killerjore.entities.EntityManager;
@@ -20,6 +23,8 @@ public class GameScreen implements Screen {
 
     private OrthographicCamera camera;
     private SpriteBatch uiSpriteBatch;
+
+    Music audio;
 
     public GameScreen(Main main) {
 
@@ -36,20 +41,25 @@ public class GameScreen implements Screen {
         // Temp player and skeleton objects, going to make their values parsed from files later and a saving system aswell :D
         Player player = new Player(23 * 32, 23 * 32, 64, 64, 25, 25, 20, 20, 20, 20, camera);
         Skeleton skeleton = new Skeleton(22 * 32, 19 * 32, 64, 64, 25, 25,20, 20, 20, 20, 70);
+        Fireball fireball = new Fireball(21 * 32, 19 * 32, 32, 32, 32, 32, 10, player.getDirection());
         EntityManager.getInstance().getStarterWorldEntityList().add(skeleton);
         EntityManager.getInstance().getStarterWorldEntityList().add(player);
+        EntityManager.getInstance().getStarterWorldEntityList().add(fireball);
         new InputHandler();
         EventManager.getInstance();
     }
 
     @Override
     public void show() {
-
+        audio = Gdx.audio.newMusic(Gdx.files.internal("audio/titleScreen.mp3"));
+        audio.setLooping(true);
+        audio.play();
     }
 
     @Override
     public void render(float delta) {
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
+
         WorldManager.getInstance().getCurrentWorld().render(delta, camera);
         uiSpriteBatch.begin();
         UIManager.getInstance().render(uiSpriteBatch);
@@ -84,5 +94,6 @@ public class GameScreen implements Screen {
         WorldManager.getInstance().getCurrentWorld().dispose();
         uiSpriteBatch.dispose();
         UIManager.getInstance().dispose();
+        audio.dispose();
     }
 }

@@ -52,15 +52,16 @@ public class EntityManager {
         tick();
         postRenderList = new ArrayList<>();
         for (Entity entity : entities) {
-            if (entity instanceof Player)
-                continue;
-            if (player.getOffsetY() + 3 < entity.getOffsetY() + entity.collisionHeight) {
-                entity.render(batch, tiledMap);
-            }else {
-                postRenderList.add(entity);
+            if (!(entity instanceof Player)) {
+                if (player.getOffsetY() + 3 < entity.getOffsetY() + entity.collisionHeight) {
+                    entity.render(batch, tiledMap);
+                } else {
+                    postRenderList.add(entity);
+                }
             }
         }
         getPlayer().render(batch, tiledMap);
+
         for (Entity entity : postRenderList) {
             entity.render(batch, tiledMap);
         }

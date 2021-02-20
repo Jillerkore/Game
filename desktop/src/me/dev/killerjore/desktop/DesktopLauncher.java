@@ -10,10 +10,7 @@ import me.dev.killerjore.Main;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
-		config.setForegroundFPS(60);
+		config.setForegroundFPS(120);
 		new Lwjgl3Application(new Main(), config);
-		Music audio = Gdx.audio.newMusic(Gdx.files.internal("audio/titleScreen.mp3"));
-		audio.setLooping(true);
-		audio.play();
 	}
 }

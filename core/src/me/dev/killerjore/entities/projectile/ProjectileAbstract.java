@@ -9,7 +9,7 @@ public abstract class ProjectileAbstract extends Entity {
     public float getSpeed() {
         return speed;
     }
-    public void setSpeed() {
+    public void setSpeed(float speed) {
         this.speed = speed;
     }
 

@@ -1,8 +1,9 @@
-package me.dev.killerjore.event.listeners;
+package me.dev.killerjore.event.listeners.entities;
 
 import me.dev.killerjore.entities.creature.Creature;
 import me.dev.killerjore.event.annotations.EventHandler;
 import me.dev.killerjore.event.events.entityEvent.EntityAttackEntityEvent;
+import me.dev.killerjore.event.listeners.Listener;
 
 public class EntityAttackListener implements Listener {
 

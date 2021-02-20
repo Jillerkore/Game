@@ -13,6 +13,7 @@ import java.util.ArrayList;
 /*
 * Singleton class for managing the events and invoking methods
  */
+
 public class EventManager {
 
     private static EventManager instance;
@@ -50,10 +51,9 @@ public class EventManager {
 
     public void invokeEventMethods(Event event) {
         eventMethodList.forEach(methodHandleModel -> {
-            if (event.getClass() == methodHandleModel.getEventClass()) {
+            if (event.getClass().isAssignableFrom(methodHandleModel.getEventClass())) {
                 try {
                     methodHandleModel.getMethodHandle().invoke(event);
-                    System.out.println("method invoked");
                 } catch (Throwable throwable) {
                     throwable.printStackTrace();
                 }

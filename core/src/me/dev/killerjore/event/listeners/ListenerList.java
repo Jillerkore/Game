@@ -1,5 +1,7 @@
 package me.dev.killerjore.event.listeners;
 
+import me.dev.killerjore.event.listeners.entities.EntityAttackListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
