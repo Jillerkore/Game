@@ -31,7 +31,7 @@ public abstract class MovableCreature extends Creature {
         updateCollisionBox();
     }
 
-    protected void moveX(TiledMap tiledMap) {
+    public void moveX(TiledMap tiledMap) {
         if (getDirection() == Direction.EAST) {
             float oldX = getOffsetX();
             setOffsetX(getOffsetX() + getSpeed() * Gdx.graphics.getDeltaTime());

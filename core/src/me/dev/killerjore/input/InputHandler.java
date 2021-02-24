@@ -4,46 +4,50 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import me.dev.killerjore.entities.EntityManager;
+import me.dev.killerjore.screens.GameScreen;
 import me.dev.killerjore.utils.Direction;
 
 public class InputHandler implements InputProcessor {
 
     private EntityManager entities;
+    private GameScreen screen;
 
-    public InputHandler() {
+    public InputHandler(GameScreen screen) {
         entities = EntityManager.getInstance();
         Gdx.input.setInputProcessor(this);
+        this.screen = screen;
     }
 
     @Override
     public boolean keyDown(int keycode) {
-
         if (Input.Keys.Y == keycode) {
             entities.getPlayer().toggleCameraUpdate();
         }
         if (Input.Keys.SPACE == keycode) {
             entities.getPlayer().setAttacking(true);
-        }else if (Input.Keys.W == keycode) {
-            entities.getPlayer().setDirection(Direction.NORTH);
-            entities.getPlayer().setWalking(true);
+        }
+        if (Input.Keys.W == keycode) {
+            entities.getPlayer().walkingUp = true;
         } else if (Input.Keys.A == keycode) {
-            entities.getPlayer().setDirection(Direction.WEST);
-            entities.getPlayer().setWalking(true);
+            entities.getPlayer().walkingLeft = true;
         } else if (Input.Keys.S == keycode) {
-            entities.getPlayer().setDirection(Direction.SOUTH);
-            entities.getPlayer().setWalking(true);
+            entities.getPlayer().walkingDown = true;
         } else if (Input.Keys.D == keycode) {
-            entities.getPlayer().setDirection(Direction.EAST);
-            entities.getPlayer().setWalking(true);
+            entities.getPlayer().walkingRight = true;
         }
         return true;
     }
     @Override
-    public boolean keyUp ( int keycode){
-        if (keycode == Input.Keys.W) entities.getPlayer().setWalking(false);
-        if (keycode == Input.Keys.A) entities.getPlayer().setWalking(false);
-        if (keycode == Input.Keys.S) entities.getPlayer().setWalking(false);
-        if (keycode == Input.Keys.D) entities.getPlayer().setWalking(false);
+    public boolean keyUp (int keycode){
+        if (keycode == Input.Keys.W)
+            entities.getPlayer().walkingUp = false;
+        if (keycode == Input.Keys.A)
+            entities.getPlayer().walkingLeft = false;
+        if (keycode == Input.Keys.S)
+            entities.getPlayer().walkingDown = false;
+        if (keycode == Input.Keys.D)
+            entities.getPlayer().walkingRight = false;
+
         return true;
     }
     @Override

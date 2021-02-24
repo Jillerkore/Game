@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import me.dev.killerjore.entities.EntityManager;
 import me.dev.killerjore.entities.statics.Teleporter;
+import me.dev.killerjore.particles.ParticleManager;
 import me.dev.killerjore.world.World;
 import me.dev.killerjore.world.WorldType;
 
@@ -23,6 +24,7 @@ public class StarterWorld extends World {
         renderer.renderTileLayer((TiledMapTileLayer) layers.get(0));
         renderer.renderTileLayer((TiledMapTileLayer) layers.get(1));
         EntityManager.getInstance().renderAllEntities(renderer.getBatch(), map);
+        ParticleManager.getInstance().render(renderer.getBatch());
         renderer.renderTileLayer((TiledMapTileLayer) layers.get(2));
         renderer.getBatch().end();
     }

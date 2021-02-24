@@ -1,14 +1,16 @@
 package me.dev.killerjore.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.strongjoshua.console.Console;
+import com.strongjoshua.console.GUIConsole;
 import me.dev.killerjore.Main;
-import me.dev.killerjore.entities.Entity;
-import me.dev.killerjore.entities.projectile.projectiles.Fireball;
+import me.dev.killerjore.audio.AudioManager;
+import me.dev.killerjore.console.ConsoleCommandExecutor;
 import me.dev.killerjore.event.EventManager;
 import me.dev.killerjore.ui.UIManager;
 import me.dev.killerjore.entities.EntityManager;
@@ -24,7 +26,7 @@ public class GameScreen implements Screen {
     private OrthographicCamera camera;
     private SpriteBatch uiSpriteBatch;
 
-    Music audio;
+    private Console console;
 
     public GameScreen(Main main) {
 
@@ -38,22 +40,29 @@ public class GameScreen implements Screen {
         camera.position.set(0, 0, 0);
         camera.update();
 
-        // Temp player and skeleton objects, going to make their values parsed from files later and a saving system aswell :D
-        Player player = new Player(23 * 32, 23 * 32, 64, 64, 25, 25, 20, 20, 20, 20, camera);
-        Skeleton skeleton = new Skeleton(22 * 32, 19 * 32, 64, 64, 25, 25,20, 20, 20, 20, 70);
-        Fireball fireball = new Fireball(21 * 32, 19 * 32, 32, 32, 32, 32, 10, player.getDirection());
-        EntityManager.getInstance().getStarterWorldEntityList().add(skeleton);
-        EntityManager.getInstance().getStarterWorldEntityList().add(player);
-        EntityManager.getInstance().getStarterWorldEntityList().add(fireball);
-        new InputHandler();
+        new InputHandler(this);
+
+        /*
+        * Initializing the singleton classes beforehand
+         */
         EventManager.getInstance();
+        AudioManager.getInstance();
+        EntityManager.getInstance();
+
+        console = new GUIConsole();
+        console.setSizePercent(100, 50);
+        console.setPositionPercent(0, 50);
+        console.setDisplayKeyID(Input.Keys.F12);
+        console.setCommandExecutor(new ConsoleCommandExecutor(console));
     }
 
     @Override
     public void show() {
-        audio = Gdx.audio.newMusic(Gdx.files.internal("audio/titleScreen.mp3"));
-        audio.setLooping(true);
-        audio.play();
+        Player player = new Player(23 * 32, 23 * 32, 64, 64, 25, 25, 20, 20, 20, 20, camera);
+        Skeleton skeleton = new Skeleton(22 * 32, 19 * 32, 64, 64, 25, 25,20, 20, 20, 20, 70);
+
+        EntityManager.getInstance().getStarterWorldEntityList().add(skeleton);
+        EntityManager.getInstance().getStarterWorldEntityList().add(player);
     }
 
     @Override
@@ -67,6 +76,8 @@ public class GameScreen implements Screen {
 
         EntityManager.getInstance().dispose();
 
+        console.refresh();
+        console.draw();
     }
 
     @Override
@@ -94,6 +105,6 @@ public class GameScreen implements Screen {
         WorldManager.getInstance().getCurrentWorld().dispose();
         uiSpriteBatch.dispose();
         UIManager.getInstance().dispose();
-        audio.dispose();
+        AudioManager.getInstance().dispose();
     }
 }

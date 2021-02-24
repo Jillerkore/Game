@@ -12,6 +12,6 @@ public class FireballSpellTextureRepo extends TextureRepo {
     }
 
     private FireballSpellTextureRepo() {
-        super("sprites/projectiles/spells/fireballEffect.png", 32, 32);
+        super("sprites/projectiles/spells/fireballEffect.png", 64, 64 + 16);
     }
 }

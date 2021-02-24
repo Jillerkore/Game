@@ -2,6 +2,7 @@ package me.dev.killerjore.entities.creature;
 
 import com.badlogic.gdx.Gdx;
 import me.dev.killerjore.animations.bigCreaturesAnimation.BigCreatureAnimation;
+import me.dev.killerjore.audio.AudioManager;
 import me.dev.killerjore.entities.EntityManager;
 import me.dev.killerjore.event.EventManager;
 import me.dev.killerjore.event.events.entityEvent.EntityAttackEntityEvent;
@@ -14,10 +15,15 @@ public abstract class Creature extends CreatureAbstract {
     protected BigCreatureAnimation animation;
 
     protected float elapsedTime;
-    private float attackElapsedTime = 61;
+    private float attackElapsedTime;
     private float attackAnimationElapsedTime;
 
+    private EntityAttackEntityEvent attackEvent;
+
     private boolean playAttackAnimation = false;
+
+    public BigCreatureAnimation getAnimation() { return animation; }
+    public float getElapsedTime() { return elapsedTime; }
 
     public Creature(float x, float y, int width, int height, int collisionWidth, int collisionHeight, int health, int maxHealth, int stamina, int maxStamina, float speed, float attackSpeedInFrames) {
 
@@ -30,15 +36,15 @@ public abstract class Creature extends CreatureAbstract {
         setAttackSpeed(attackSpeedInFrames);
         setDirection(Direction.EAST);
 
+        attackElapsedTime = attackSpeedInFrames;
     }
 
     public void attack() {
-
         if (isAttacking()) {
 
             if (attackElapsedTime >= getAttackSpeed()) {
 
-                setStamina(getStamina() - 1);
+                attackEvent = null;
 
                 playAttackAnimation = true;
                 attackElapsedTime = 0;
@@ -63,8 +69,8 @@ public abstract class Creature extends CreatureAbstract {
                     if (entity == this) return;
                     if (!(entity instanceof Creature)) return;
                     if (entity.getCollisionBox().intersects(attackCollisionRect)) {
-                        EntityAttackEntityEvent event = new EntityAttackEntityEvent(this, entity);
-                        EventManager.getInstance().invokeEventMethods(event);
+                        attackEvent = new EntityAttackEntityEvent(this, entity);
+                        EventManager.getInstance().invokeEventMethods(attackEvent);
                     }
                 });
             }

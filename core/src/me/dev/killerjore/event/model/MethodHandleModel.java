@@ -6,8 +6,8 @@ import java.lang.invoke.MethodHandle;
 
 public class MethodHandleModel {
 
-    private MethodHandle method;
-    private Class<? extends Event> eventClass;
+    private final MethodHandle method;
+    private final Class<? extends Event> eventClass;
 
     public MethodHandleModel(MethodHandle method, Class<? extends Event> eventClass) {
         this.method = method;

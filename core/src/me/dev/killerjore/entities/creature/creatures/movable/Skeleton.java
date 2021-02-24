@@ -22,6 +22,8 @@ public class Skeleton extends MovableCreature {
     private int timesToWalk = 0;
     private int directionToWalk = 0;
 
+    boolean initializedDeath = false;
+
     public Skeleton(float x, float y, int width, int height, int collisionWidth, int collisionHeight, int health, int maxHealth, int stamina, int maxStamina, float speed) {
         super(x, y, width, height, collisionWidth, collisionHeight, health, maxHealth, stamina, maxStamina, speed, 60);
 
@@ -47,12 +49,11 @@ public class Skeleton extends MovableCreature {
 
     @Override
     public void render(Batch batch, TiledMap tiledMap) {
-
-        tick(tiledMap);
-
         if (getHealth() <= 0) {
+            updateElapsedTimes();
             handleDeath();
-            return;
+        }else {
+            tick(tiledMap);
         }
         batch.draw(animation.getCurrentFrame(), getOffsetX(), getOffsetY());
     }
@@ -92,9 +93,13 @@ public class Skeleton extends MovableCreature {
     }
 
     private void handleDeath() {
-        animation.setCurrentFrame(animation.getDeathAnimation().getKeyFrame(elapsedTime, true));
+        if (!initializedDeath) {
+            elapsedTime = 0;
+            initializedDeath = true;
+        }
         if (animation.getDeathAnimation().isAnimationFinished(elapsedTime)) {
             setActive(false);
         }
+        animation.setCurrentFrame(animation.getDeathAnimation().getKeyFrame(elapsedTime, true));
     }
 }

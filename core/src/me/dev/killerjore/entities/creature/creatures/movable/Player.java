@@ -6,15 +6,20 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import me.dev.killerjore.animations.bigCreaturesAnimation.animations.PlayerAnimation;
 import me.dev.killerjore.entities.EntityManager;
 import me.dev.killerjore.entities.statics.Teleporter;
+import me.dev.killerjore.event.EventManager;
+import me.dev.killerjore.event.events.playerEvent.PlayerMoveEvent;
 import me.dev.killerjore.textureRepository.entityTextures.PlayerTextureRepo;
-import me.dev.killerjore.utils.Direction;
 import me.dev.killerjore.world.WorldManager;
 
 public class Player extends MovableCreature {
 
     private EntityManager entityManager;
     private OrthographicCamera camera;
+
     private boolean updateCamEachFrame = false;
+    public boolean walkingUp, walkingDown, walkingLeft, walkingRight;
+
+    private PlayerMoveEvent moveEvent;
 
     public void toggleCameraUpdate() {
         if (updateCamEachFrame) {
@@ -22,6 +27,7 @@ public class Player extends MovableCreature {
         }else {
             updateCamEachFrame = true;
         }
+        updateCamera();
     }
 
     public Player(float x, float y, int width, int height, int collisionWidth, int collisionHeight, int maxHealth, int health, int maxStamina, int stamina, OrthographicCamera camera) {
@@ -40,6 +46,11 @@ public class Player extends MovableCreature {
 
         updatePos();
         camera.position.set(getX(), getY(), 0);
+
+        walkingUp = false;
+        walkingDown = false;
+        walkingLeft = false;
+        walkingRight = false;
     }
 
     private void tick(TiledMap tiledMap) {
@@ -49,8 +60,10 @@ public class Player extends MovableCreature {
          */
         updateElapsedTimes();
 
-        if (isWalking()) {
-            handleWalking(tiledMap);
+        if (walkingUp || walkingDown || walkingLeft || walkingRight) {
+            moveEvent = null;
+            moveEvent = new PlayerMoveEvent(this, tiledMap);
+            EventManager.getInstance().invokeEventMethods(moveEvent);
         }
 
         handleWorldTeleporting();
@@ -69,31 +82,17 @@ public class Player extends MovableCreature {
         updateCamera();
     }
 
-    private void handleWalking(TiledMap tiledMap) {
-        if (!isAttacking())
-            // Checks the direction and sets the position and animation's frame accordingly.
-            if (getDirection() == Direction.EAST) {
-                moveX(tiledMap);
-                animation.setCurrentFrame(animation.getRightAnimation().getKeyFrame(elapsedTime, true));
-            }else if (getDirection() == Direction.WEST) {
-                moveX(tiledMap);
-                animation.setCurrentFrame(animation.getLeftAnimation().getKeyFrame(elapsedTime, true));
-            }
-            else if (getDirection() == Direction.NORTH) {
-                moveY(tiledMap);
-                animation.setCurrentFrame(animation.getUpAnimation().getKeyFrame(elapsedTime, true));
-            }
-            else if (getDirection() == Direction.SOUTH) {
-                moveY(tiledMap);
-                animation.setCurrentFrame(animation.getDownAnimation().getKeyFrame(elapsedTime, true));
-            }
-    }
+
 
     private void updateCamera() {
-        if (isWalking() && updateCamEachFrame) {
+        if (updateCamEachFrame) {
             camera.position.set(getOffsetX(), getOffsetY(), 0);
         }
         camera.update();
+    }
+
+    public void forceUpdateCamera() {
+        camera.position.set(getOffsetX(), getOffsetY(), 0);
     }
 
     private void handleWorldTeleporting() {

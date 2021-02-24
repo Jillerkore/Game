@@ -60,7 +60,7 @@ public abstract class Projectile extends ProjectileAbstract {
         }
     }
 
-    private void updatePos() {
+    protected void updatePos() {
         setX(getOffsetX());
         setY(getOffsetY());
         updateCollisionBox();
@@ -72,7 +72,7 @@ public abstract class Projectile extends ProjectileAbstract {
     }
 
     public void entityCollisionImpact(Entity victim) {
-//        ProjectileHitEntityEvent e = new ProjectileHitEntityEvent(this, victim);
-//        EventManager.getInstance().invokeEventMethods(e);
+        ProjectileHitEntityEvent e = new ProjectileHitEntityEvent(this, victim);
+        EventManager.getInstance().invokeEventMethods(e);
     }
 }

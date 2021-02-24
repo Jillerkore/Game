@@ -2,7 +2,6 @@ package me.dev.killerjore.animations.bigCreaturesAnimation;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import lombok.*;
 import me.dev.killerjore.textureRepository.TextureRepo;
 
 public class BigCreatureAnimation {
@@ -22,8 +21,8 @@ public class BigCreatureAnimation {
     private TextureRegion currentFrame;
 
     private static final float frameDurationWalk = 1/7f;
-    private static final float frameDurationAttack = 1/11f;
-    private static final float frameDurationDeath = 20;
+    private static final float frameDurationAttack = 1/15f;
+    private static final float frameDurationDeath = 1/2f;
 
     public BigCreatureAnimation(TextureRepo repo) {
         textures = repo.getTextures();
@@ -75,91 +74,28 @@ public class BigCreatureAnimation {
         deathAnimation = new Animation<>(frameDurationDeath, deathFrame);
     }
 
-    public Animation<TextureRegion> getUpAnimation() {
-        return upAnimation;
-    }
-
-    public void setUpAnimation(Animation<TextureRegion> upAnimation) {
-        this.upAnimation = upAnimation;
-    }
-
+    public Animation<TextureRegion> getUpAnimation() { return upAnimation; }
     public Animation<TextureRegion> getDownAnimation() {
         return downAnimation;
     }
-
-    public void setDownAnimation(Animation<TextureRegion> downAnimation) {
-        this.downAnimation = downAnimation;
-    }
-
     public Animation<TextureRegion> getLeftAnimation() {
         return leftAnimation;
     }
-
-    public void setLeftAnimation(Animation<TextureRegion> leftAnimation) {
-        this.leftAnimation = leftAnimation;
-    }
-
     public Animation<TextureRegion> getRightAnimation() {
         return rightAnimation;
     }
-
-    public void setRightAnimation(Animation<TextureRegion> rightAnimation) {
-        this.rightAnimation = rightAnimation;
-    }
-
     public Animation<TextureRegion> getUpAttackAnimation() {
         return upAttackAnimation;
     }
-
-    public void setUpAttackAnimation(Animation<TextureRegion> upAttackAnimation) {
-        this.upAttackAnimation = upAttackAnimation;
-    }
-
     public Animation<TextureRegion> getDownAttackAnimation() {
         return downAttackAnimation;
     }
+    public Animation<TextureRegion> getLeftAttackAnimation() { return leftAttackAnimation; }
+    public Animation<TextureRegion> getRightAttackAnimation() { return rightAttackAnimation; }
+    public Animation<TextureRegion> getDeathAnimation() { return deathAnimation; }
 
-    public void setDownAttackAnimation(Animation<TextureRegion> downAttackAnimation) {
-        this.downAttackAnimation = downAttackAnimation;
-    }
-
-    public Animation<TextureRegion> getLeftAttackAnimation() {
-        return leftAttackAnimation;
-    }
-
-    public void setLeftAttackAnimation(Animation<TextureRegion> leftAttackAnimation) {
-        this.leftAttackAnimation = leftAttackAnimation;
-    }
-
-    public Animation<TextureRegion> getRightAttackAnimation() {
-        return rightAttackAnimation;
-    }
-
-    public void setRightAttackAnimation(Animation<TextureRegion> rightAttackAnimation) {
-        this.rightAttackAnimation = rightAttackAnimation;
-    }
-
-    public Animation<TextureRegion> getDeathAnimation() {
-        return deathAnimation;
-    }
-
-    public void setDeathAnimation(Animation<TextureRegion> deathAnimation) {
-        this.deathAnimation = deathAnimation;
-    }
-
-    public Animation<TextureRegion> getCurrentAttackAnimation() {
-        return currentAttackAnimation;
-    }
-
-    public void setCurrentAttackAnimation(Animation<TextureRegion> currentAttackAnimation) {
-        this.currentAttackAnimation = currentAttackAnimation;
-    }
-
-    public TextureRegion getCurrentFrame() {
-        return currentFrame;
-    }
-
-    public void setCurrentFrame(TextureRegion currentFrame) {
-        this.currentFrame = currentFrame;
-    }
+    public Animation<TextureRegion> getCurrentAttackAnimation() { return currentAttackAnimation; }
+    public void setCurrentAttackAnimation(Animation<TextureRegion> currentAttackAnimation) { this.currentAttackAnimation = currentAttackAnimation; }
+    public TextureRegion getCurrentFrame() { return currentFrame; }
+    public void setCurrentFrame(TextureRegion currentFrame) { this.currentFrame = currentFrame; }
 }
