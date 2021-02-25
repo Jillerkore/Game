@@ -22,6 +22,8 @@ public abstract class Creature extends CreatureAbstract {
 
     private boolean playAttackAnimation = false;
 
+    boolean initializedDeath = false;
+
     public BigCreatureAnimation getAnimation() { return animation; }
     public float getElapsedTime() { return elapsedTime; }
 
@@ -103,5 +105,16 @@ public abstract class Creature extends CreatureAbstract {
         elapsedTime += Gdx.graphics.getDeltaTime();
         attackElapsedTime++;
         attackAnimationElapsedTime += Gdx.graphics.getDeltaTime();
+    }
+
+    protected void handleDeath() {
+        if (!initializedDeath) {
+            elapsedTime = 0;
+            initializedDeath = true;
+        }
+        if (animation.getDeathAnimation().isAnimationFinished(elapsedTime)) {
+            setActive(false);
+        }
+        animation.setCurrentFrame(animation.getDeathAnimation().getKeyFrame(elapsedTime, true));
     }
 }
