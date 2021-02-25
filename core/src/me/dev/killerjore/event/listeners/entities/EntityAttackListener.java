@@ -26,7 +26,8 @@ public class EntityAttackListener implements Listener {
                 creature.setHealth(creature.getHealth() - 1);
             }
         }
-        new Blood(event.getVictim().getOffsetX() - 32, event.getVictim().getOffsetY() - 40, 128, 128);
+        //new Blood(event.getVictim().getOffsetX() - 32, event.getVictim().getOffsetY() - 40, 128, 128);
+        new Blood(event.getVictim().getOffsetX() - 16, event.getVictim().getOffsetY() - 32, 64 + 32, 64 + 32);
     }
 
 }
