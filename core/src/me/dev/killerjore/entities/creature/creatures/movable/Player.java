@@ -8,7 +8,7 @@ import me.dev.killerjore.entities.EntityManager;
 import me.dev.killerjore.entities.statics.Teleporter;
 import me.dev.killerjore.event.EventManager;
 import me.dev.killerjore.event.events.playerEvent.PlayerMoveEvent;
-import me.dev.killerjore.textureRepository.entityTextures.PlayerTextureRepo;
+import me.dev.killerjore.textureRepository.TextureManager;
 import me.dev.killerjore.world.WorldManager;
 
 public class Player extends MovableCreature {
@@ -20,6 +20,8 @@ public class Player extends MovableCreature {
     public boolean walkingUp, walkingDown, walkingLeft, walkingRight;
 
     private PlayerMoveEvent moveEvent;
+
+    public boolean godMode = false;
 
     public void toggleCameraUpdate() {
         if (updateCamEachFrame) {
@@ -42,7 +44,7 @@ public class Player extends MovableCreature {
         setOffsetY(y);
 
         animation = new PlayerAnimation();
-        animation.setCurrentFrame(PlayerTextureRepo.getInstance().getTextures()[1][1]);
+        animation.setCurrentFrame(TextureManager.getInstance().playerTextureRepo.getTextures()[1][1]);
 
         updatePos();
         camera.position.set(getX(), getY(), 0);
@@ -77,7 +79,12 @@ public class Player extends MovableCreature {
 
     @Override
     public void render(Batch batch, TiledMap tiledMap) {
-        tick(tiledMap);
+        if (!(getHealth() <= 0)) {
+            tick(tiledMap);
+        }else {
+            updateElapsedTimes();
+            handleDeath();
+        }
         batch.draw(animation.getCurrentFrame(), getOffsetX(), getOffsetY());
         updateCamera();
     }
@@ -93,6 +100,7 @@ public class Player extends MovableCreature {
 
     public void forceUpdateCamera() {
         camera.position.set(getOffsetX(), getOffsetY(), 0);
+        camera.update();
     }
 
     private void handleWorldTeleporting() {

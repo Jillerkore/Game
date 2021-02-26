@@ -23,32 +23,55 @@ public class HostileCreatureAI {
 
         player = EntityManager.getInstance().getPlayer();
 
-        playerX = Math.round(player.getX() / 32);
-        playerY = Math.round(player.getY() / 32);
-        creatureX = Math.round(creature.getX() / 32);
-        creatureY = Math.round(creature.getY() / 32);
+        playerX = Math.round(player.getX());
+        playerY = Math.round(player.getY());
+        creatureX = Math.round(creature.getX());
+        creatureY = Math.round(creature.getY());
 
-        if (playerY != creatureY) {
-            if (playerY > creatureY) {
-                creature.setDirection(Direction.NORTH);
-            }else if (playerY < creatureY) {
-                creature.setDirection(Direction.SOUTH);
-            }
-            creature.moveY(tiledMap);
-        }else {
+        if (playerX != creatureX) {
             if (playerX > creatureX) {
                 creature.setDirection(Direction.EAST);
+                if (creature.isCollidingWithTile(tiledMap)) {
+                    creature.setDirection(Direction.NORTH);
+                    creature.moveY(tiledMap);
+                    return;
+                }
             }else if (playerX < creatureX) {
                 creature.setDirection(Direction.WEST);
+                if (creature.isCollidingWithTile(tiledMap)) {
+                    creature.setDirection(Direction.SOUTH);
+                    creature.moveY(tiledMap);
+                    return;
+                }
             }
             creature.moveX(tiledMap);
+
+        }else {
+            if (playerY > creatureY) {
+                creature.setDirection(Direction.NORTH);
+                if (creature.isCollidingWithTile(tiledMap)) {
+                    creature.setDirection(Direction.EAST);
+                    creature.moveX(tiledMap);
+                    return;
+                }
+            }else if (playerY < creatureY) {
+                creature.setDirection(Direction.SOUTH);
+                if (creature.isCollidingWithTile(tiledMap)) {
+                    creature.setDirection(Direction.EAST);
+                    creature.moveX(tiledMap);
+                    return;
+                }
+            }
+            creature.moveY(tiledMap);
         }
 
         absValueX = Math.abs(creatureX - playerX);
         absValueY = Math.abs(creatureY - playerY);
 
-        if (absValueX <= 1 && absValueY <= 1) {
-            creature.setAttacking(true); creature.attack();
+
+        if (absValueX <= 30 && absValueY <= 30) {
+            if (player.isActive())
+                creature.setAttacking(true); creature.attack();
         }
     }
 }

@@ -3,7 +3,6 @@ package me.dev.killerjore.entities.projectile.projectiles;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import me.dev.killerjore.entities.projectile.Projectile;
-import me.dev.killerjore.textureRepository.projectileTextures.FireballSpellTextureRepo;
 import me.dev.killerjore.utils.Direction;
 
 public class Fireball extends Projectile {

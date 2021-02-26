@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import me.dev.killerjore.ai.HostileCreatureAI;
 import me.dev.killerjore.animations.bigCreaturesAnimation.animations.SkeletonAnimation;
+import me.dev.killerjore.textureRepository.TextureManager;
 import me.dev.killerjore.textureRepository.entityTextures.SkeletonTextureRepo;
 import me.dev.killerjore.utils.Direction;
 
@@ -21,7 +22,7 @@ public class Skeleton extends MovableCreature {
         setOffsetY(y);
 
         animation = new SkeletonAnimation();
-        animation.setCurrentFrame(SkeletonTextureRepo.getInstance().getTextures()[1][1]);
+        animation.setCurrentFrame(TextureManager.getInstance().skeletonTextureRepo.getTextures()[1][1]);
 
         ai = new HostileCreatureAI();
 

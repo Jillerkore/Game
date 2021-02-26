@@ -12,6 +12,7 @@ import me.dev.killerjore.Main;
 import me.dev.killerjore.audio.AudioManager;
 import me.dev.killerjore.console.ConsoleCommandExecutor;
 import me.dev.killerjore.event.EventManager;
+import me.dev.killerjore.textureRepository.TextureManager;
 import me.dev.killerjore.ui.UIManager;
 import me.dev.killerjore.entities.EntityManager;
 import me.dev.killerjore.entities.creature.creatures.movable.Player;
@@ -45,6 +46,7 @@ public class GameScreen implements Screen {
         /*
         * Initializing the singleton classes beforehand
          */
+        TextureManager.getInstance().initTextureRepos();
         EventManager.getInstance();
         AudioManager.getInstance();
         EntityManager.getInstance();
@@ -68,6 +70,11 @@ public class GameScreen implements Screen {
     @Override
     public void render(float delta) {
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
+
+        if (!EntityManager.getInstance().getPlayer().isActive()) {
+            main.setScreen(new GameOverScreen());
+            return;
+        }
 
         WorldManager.getInstance().getCurrentWorld().render(delta, camera);
         uiSpriteBatch.begin();
@@ -102,9 +109,12 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
+        System.out.println("Dispose called");
         WorldManager.getInstance().getCurrentWorld().dispose();
         uiSpriteBatch.dispose();
         UIManager.getInstance().dispose();
         AudioManager.getInstance().dispose();
+        TextureManager.getInstance().dispose();
+        console.dispose();
     }
 }

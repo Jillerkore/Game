@@ -2,7 +2,7 @@ package me.dev.killerjore.particles.particles;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import me.dev.killerjore.particles.Particle;
-import me.dev.killerjore.textureRepository.particleTextureRepo.ParticleTextureRepo;
+import me.dev.killerjore.textureRepository.TextureManager;
 
 public class Blood extends Particle {
 
@@ -18,9 +18,8 @@ public class Blood extends Particle {
         int index = 0;
         int index1 = 0;
 
-        System.out.println(ParticleTextureRepo.getInstance().getTextures().length);
         for (int i = 0; i < 12; i++) {
-            frames[i] = ParticleTextureRepo.getInstance().getTextures()[index][index1];
+            frames[i] = TextureManager.getInstance().particleTextureRepo.getTextures()[index][index1];
 
             if (index == 3) {
                 index = 0;

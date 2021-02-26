@@ -49,4 +49,9 @@ public class ConsoleCommandExecutor extends CommandExecutor {
 
         console.log("Location: " + "(" + player.getX() / 32 + " ," + player.getY() / 32 + ")");
     }
+    public void godMode(boolean godMode) {
+        console.log("Setting player's godmode to: " + godMode);
+        Player player = EntityManager.getInstance().getPlayer();
+        player.godMode = godMode;
+    }
 }

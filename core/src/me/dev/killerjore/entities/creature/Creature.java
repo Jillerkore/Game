@@ -2,10 +2,11 @@ package me.dev.killerjore.entities.creature;
 
 import com.badlogic.gdx.Gdx;
 import me.dev.killerjore.animations.bigCreaturesAnimation.BigCreatureAnimation;
-import me.dev.killerjore.audio.AudioManager;
 import me.dev.killerjore.entities.EntityManager;
+import me.dev.killerjore.entities.creature.creatures.movable.Player;
 import me.dev.killerjore.event.EventManager;
 import me.dev.killerjore.event.events.entityEvent.EntityAttackEntityEvent;
+import me.dev.killerjore.event.events.entityEvent.EntityAttackEvent;
 import me.dev.killerjore.utils.Direction;
 
 import java.awt.*;
@@ -19,6 +20,7 @@ public abstract class Creature extends CreatureAbstract {
     private float attackAnimationElapsedTime;
 
     private EntityAttackEntityEvent attackEvent;
+    private EntityAttackEvent weaponSwingEvent;
 
     private boolean playAttackAnimation = false;
 
@@ -47,6 +49,10 @@ public abstract class Creature extends CreatureAbstract {
             if (attackElapsedTime >= getAttackSpeed()) {
 
                 attackEvent = null;
+                weaponSwingEvent = null;
+
+                weaponSwingEvent = new EntityAttackEvent(this);
+                EventManager.getInstance().invokeEventMethods(weaponSwingEvent);
 
                 playAttackAnimation = true;
                 attackElapsedTime = 0;
@@ -108,6 +114,7 @@ public abstract class Creature extends CreatureAbstract {
     }
 
     protected void handleDeath() {
+
         if (!initializedDeath) {
             elapsedTime = 0;
             initializedDeath = true;
