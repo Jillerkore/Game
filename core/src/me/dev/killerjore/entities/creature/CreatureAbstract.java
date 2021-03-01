@@ -14,16 +14,10 @@ public abstract class CreatureAbstract extends Entity {
     private int maxStamina;
 
     private float speed;
-    private float attackSpeed;
-
-    private boolean attacking = false;
 
     public CreatureAbstract(float x, float y, int width, int height, int collisionWidth, int collisionHeight) {
         super(x, y, width, height, collisionWidth, collisionHeight);
     }
-
-    public boolean isAttacking() { return attacking; }
-    public void setAttacking(boolean attacking) { this.attacking = attacking; }
 
     public int getHealth() {
         return health;
@@ -58,11 +52,5 @@ public abstract class CreatureAbstract extends Entity {
         this.speed = speed;
     }
 
-    public void setAttackSpeed(float attackSpeed) {
-        this.attackSpeed = attackSpeed;
-    }
-    public float getAttackSpeed() {
-        return this.attackSpeed;
-    }
 
 }

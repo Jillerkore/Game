@@ -1,4 +1,4 @@
-package me.dev.killerjore.entities.creature.creatures.movable;
+package me.dev.killerjore.entities.creature;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -56,7 +56,12 @@ public abstract class MovableCreature extends Creature {
         updateCollisionBox();
     }
 
-    public MovableCreature(float x, float y, int width, int height, int collisionWidth, int collisionHeight, int health, int maxHealth, int stamina, int maxStamina, float speed, float attackSpeedInFrames) {
-        super(x, y, width, height, collisionWidth, collisionHeight, health, maxHealth, stamina, maxStamina, speed, attackSpeedInFrames);
+    public MovableCreature(float x, float y, int width, int height, int collisionWidth, int collisionHeight, int health, int maxHealth, int stamina, int maxStamina, float speed) {
+        super(x, y, width, height, collisionWidth, collisionHeight, health, maxHealth, stamina, maxStamina, speed);
+    }
+
+    public void updatePos() {
+        setX(getOffsetX() + 16);
+        setY(getOffsetY());
     }
 }

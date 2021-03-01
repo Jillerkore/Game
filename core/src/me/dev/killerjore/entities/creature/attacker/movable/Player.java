@@ -1,17 +1,18 @@
-package me.dev.killerjore.entities.creature.creatures.movable;
+package me.dev.killerjore.entities.creature.attacker.movable;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import me.dev.killerjore.animations.bigCreaturesAnimation.animations.PlayerAnimation;
 import me.dev.killerjore.entities.EntityManager;
+import me.dev.killerjore.entities.creature.attacker.caster.Caster;
 import me.dev.killerjore.entities.statics.Teleporter;
 import me.dev.killerjore.event.EventManager;
 import me.dev.killerjore.event.events.playerEvent.PlayerMoveEvent;
 import me.dev.killerjore.textureRepository.TextureManager;
 import me.dev.killerjore.world.WorldManager;
 
-public class Player extends MovableCreature {
+public class Player extends Caster {
 
     private EntityManager entityManager;
     private OrthographicCamera camera;
@@ -34,7 +35,7 @@ public class Player extends MovableCreature {
 
     public Player(float x, float y, int width, int height, int collisionWidth, int collisionHeight, int maxHealth, int health, int maxStamina, int stamina, OrthographicCamera camera) {
 
-        super(x, y, width, height, collisionWidth, collisionHeight, health, maxHealth, stamina, maxStamina, 120f, 60);
+        super(x, y, width, height, collisionWidth, collisionHeight, health, maxHealth, stamina, maxStamina, 120f, 60, 60);
         this.camera = camera;
 
         entityManager = EntityManager.getInstance();
@@ -69,7 +70,9 @@ public class Player extends MovableCreature {
         }
 
         handleWorldTeleporting();
-        attack();
+        if (!isCasting())
+            attack();
+        cast();
         handleAnimations();
 
         if (getHealth() <= 0) {

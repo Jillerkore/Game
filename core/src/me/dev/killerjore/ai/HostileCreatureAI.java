@@ -2,8 +2,9 @@ package me.dev.killerjore.ai;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import me.dev.killerjore.entities.EntityManager;
-import me.dev.killerjore.entities.creature.creatures.movable.MovableCreature;
-import me.dev.killerjore.entities.creature.creatures.movable.Player;
+import me.dev.killerjore.entities.creature.MovableCreature;
+import me.dev.killerjore.entities.creature.attacker.Attacker;
+import me.dev.killerjore.entities.creature.attacker.movable.Player;
 import me.dev.killerjore.utils.Direction;
 
 public class HostileCreatureAI {
@@ -17,7 +18,7 @@ public class HostileCreatureAI {
 
     }
 
-    public void walkTowardsPlayer(MovableCreature creature, TiledMap tiledMap) {
+    public void walkTowardsPlayer(Attacker creature, TiledMap tiledMap) {
 
         player = null;
 

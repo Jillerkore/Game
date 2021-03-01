@@ -23,9 +23,14 @@ public class InputHandler implements InputProcessor {
         if (Input.Keys.Y == keycode) {
             entities.getPlayer().toggleCameraUpdate();
         }
-        if (Input.Keys.SPACE == keycode) {
+
+        if (Input.Keys.C == keycode) {
+            entities.getPlayer().setCasting(true);
+        }
+        else if (Input.Keys.SPACE == keycode) {
             entities.getPlayer().setAttacking(true);
         }
+
         if (Input.Keys.W == keycode) {
             entities.getPlayer().walkingUp = true;
         } else if (Input.Keys.A == keycode) {

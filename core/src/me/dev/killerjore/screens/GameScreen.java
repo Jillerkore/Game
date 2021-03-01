@@ -15,8 +15,8 @@ import me.dev.killerjore.event.EventManager;
 import me.dev.killerjore.textureRepository.TextureManager;
 import me.dev.killerjore.ui.UIManager;
 import me.dev.killerjore.entities.EntityManager;
-import me.dev.killerjore.entities.creature.creatures.movable.Player;
-import me.dev.killerjore.entities.creature.creatures.movable.Skeleton;
+import me.dev.killerjore.entities.creature.attacker.movable.Player;
+import me.dev.killerjore.entities.creature.attacker.movable.Skeleton;
 import me.dev.killerjore.input.InputHandler;
 import me.dev.killerjore.world.WorldManager;
 

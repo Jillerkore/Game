@@ -1,7 +1,7 @@
 package me.dev.killerjore.event.events.playerEvent;
 
 import me.dev.killerjore.entities.Entity;
-import me.dev.killerjore.entities.creature.creatures.movable.Player;
+import me.dev.killerjore.entities.creature.attacker.movable.Player;
 
 public class PlayerHitEntityEvent extends PlayerEvent {
 

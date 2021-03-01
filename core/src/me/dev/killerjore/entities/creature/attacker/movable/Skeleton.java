@@ -1,16 +1,15 @@
-package me.dev.killerjore.entities.creature.creatures.movable;
+package me.dev.killerjore.entities.creature.attacker.movable;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import me.dev.killerjore.ai.HostileCreatureAI;
 import me.dev.killerjore.animations.bigCreaturesAnimation.animations.SkeletonAnimation;
+import me.dev.killerjore.entities.creature.MovableCreature;
+import me.dev.killerjore.entities.creature.attacker.Attacker;
 import me.dev.killerjore.textureRepository.TextureManager;
-import me.dev.killerjore.textureRepository.entityTextures.SkeletonTextureRepo;
 import me.dev.killerjore.utils.Direction;
 
-import java.util.Random;
-
-public class Skeleton extends MovableCreature {
+public class Skeleton extends Attacker {
 
     /* AI class object */
     private HostileCreatureAI ai;

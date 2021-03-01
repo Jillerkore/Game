@@ -1,7 +1,7 @@
 package me.dev.killerjore.event.listeners.player;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import me.dev.killerjore.entities.creature.creatures.movable.Player;
+import me.dev.killerjore.entities.creature.attacker.movable.Player;
 import me.dev.killerjore.event.annotations.EventHandler;
 import me.dev.killerjore.event.events.playerEvent.PlayerMoveEvent;
 import me.dev.killerjore.event.listeners.Listener;
