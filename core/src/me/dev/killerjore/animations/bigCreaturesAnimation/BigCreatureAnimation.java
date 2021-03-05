@@ -26,7 +26,7 @@ public class BigCreatureAnimation {
     private static final float frameDurationWalk = 1/7f;
     private static final float frameDurationAttack = 1/15f;
     private static final float frameDurationDeath = 1/2f;
-    private static final float frameDurationCast = 1/3;
+    private static final float frameDurationCast = 1/15f;
 
     public BigCreatureAnimation(TextureRepo repo) {
         textures = repo.getTextures();
@@ -88,9 +88,9 @@ public class BigCreatureAnimation {
         rightAttackAnimation = new Animation<>(frameDurationAttack, rightAttackFrame);
 
         upCastAnimation = new Animation<>(frameDurationCast, upCastFrame);
-        downCastAnimation = new Animation<>(frameDurationAttack, downCastFrame);
-        leftCastAnimation = new Animation<>(frameDurationAttack, leftCastFrame);
-        rightCastAnimation = new Animation<>(frameDurationAttack, rightCastFrame);
+        downCastAnimation = new Animation<>(frameDurationCast, downCastFrame);
+        leftCastAnimation = new Animation<>(frameDurationCast, leftCastFrame);
+        rightCastAnimation = new Animation<>(frameDurationCast, rightCastFrame);
 
         deathAnimation = new Animation<>(frameDurationDeath, deathFrame);
     }

@@ -81,7 +81,6 @@ public abstract class Projectile extends ProjectileAbstract {
     }
 
     public void entityCollisionImpact(Entity victim) {
-        System.out.println("Entity collision impact");
         ProjectileHitEntityEvent e = new ProjectileHitEntityEvent(this, victim);
         EventManager.getInstance().invokeEventMethods(e);
     }

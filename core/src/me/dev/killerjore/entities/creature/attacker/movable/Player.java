@@ -64,9 +64,11 @@ public class Player extends Caster {
         updateElapsedTimes();
 
         if (walkingUp || walkingDown || walkingLeft || walkingRight) {
-            moveEvent = null;
-            moveEvent = new PlayerMoveEvent(this, tiledMap);
-            EventManager.getInstance().invokeEventMethods(moveEvent);
+            if (!isCasting()) {
+                moveEvent = null;
+                moveEvent = new PlayerMoveEvent(this, tiledMap);
+                EventManager.getInstance().invokeEventMethods(moveEvent);
+            }
         }
 
         handleWorldTeleporting();

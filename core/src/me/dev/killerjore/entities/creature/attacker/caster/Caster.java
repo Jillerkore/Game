@@ -2,15 +2,8 @@ package me.dev.killerjore.entities.creature.attacker.caster;
 
 import com.badlogic.gdx.Gdx;
 import me.dev.killerjore.entities.EntityManager;
-import me.dev.killerjore.entities.creature.Creature;
 import me.dev.killerjore.entities.creature.attacker.Attacker;
 import me.dev.killerjore.entities.projectile.projectiles.Fireball;
-import me.dev.killerjore.event.EventManager;
-import me.dev.killerjore.event.events.entityEvent.EntityAttackEntityEvent;
-import me.dev.killerjore.event.events.entityEvent.EntityAttackEvent;
-import me.dev.killerjore.utils.Direction;
-
-import java.awt.*;
 
 public abstract class Caster extends Attacker {
 
@@ -58,25 +51,35 @@ public abstract class Caster extends Attacker {
                 playCastAnimation = true;
                 castElapsedTime = 0;
 
-                Fireball fireball = null;
+                Fireball fireball;
+
+                float tempX= 0;
+                float tempY = 0;
+
                 switch (getDirection()) {
+
                     case EAST:
                         animation.setCurrentCastAnimation(animation.getRightCastAnimation());
-                        fireball = new Fireball(getX() + 35, getY(), 32, 32, 32, 32, 100, getDirection());
+                        tempX = getX();
+                        tempY = getY();
                         break;
                     case WEST:
                         animation.setCurrentCastAnimation(animation.getLeftCastAnimation());
-                        fireball = new Fireball(getX() - 35, getY(), 32, 32, 32, 32, 100, getDirection());
+                        tempX = getX() - 32;
+                        tempY = getY();
                         break;
                     case NORTH:
                         animation.setCurrentCastAnimation(animation.getUpCastAnimation());
-                        fireball = new Fireball(getX(), getY() + 35, 32, 32, 32, 32, 100, getDirection());
+                        tempX = getX();
+                        tempY = getY() + 32;
                         break;
                     case SOUTH:
                         animation.setCurrentCastAnimation(animation.getDownCastAnimation());
-                        fireball = new Fireball(getX(), getY() - 35, 32, 32, 32, 32, 100, getDirection());
+                        tempX = getX();
+                        tempY = getY() - 32;
                         break;
                 }
+                fireball = new Fireball(tempX, tempY, 32, 32, 32, 32, 150, getDirection());
                 EntityManager.getInstance().addEntity(fireball);
             }
 

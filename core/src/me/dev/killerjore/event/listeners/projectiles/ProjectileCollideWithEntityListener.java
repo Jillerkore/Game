@@ -11,7 +11,6 @@ public class ProjectileCollideWithEntityListener implements Listener {
     public void onCollideWithEntity(ProjectileHitEntityEvent e) {
         e.getProjectile().setActive(false);
         if (e.getVictim() instanceof Creature) {
-            System.out.println(e.getProjectile().getCollisionBox().intersects(e.getVictim().getCollisionBox()));
              ((Creature) e.getVictim()).setHealth(((Creature) e.getVictim()).getHealth() - 10);
          }
     }

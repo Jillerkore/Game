@@ -24,12 +24,19 @@ public class HostileCreatureAI {
 
         player = EntityManager.getInstance().getPlayer();
 
-        playerX = Math.round(player.getX());
-        playerY = Math.round(player.getY());
-        creatureX = Math.round(creature.getX());
-        creatureY = Math.round(creature.getY());
+        playerX = Math.round(player.getX() / 32);
+        playerY = Math.round(player.getY() / 32);
+        creatureX = Math.round(creature.getX() / 32);
+        creatureY = Math.round(creature.getY() / 32);
 
-        if (playerX != creatureX) {
+
+        absValueX = Math.abs(creatureX - playerX);
+        absValueY = Math.abs(creatureY - playerY);
+
+        float absValueXRaw = Math.abs(creature.getX() - player.getX());
+        float absValueYRaw = Math.abs(creature.getY() - player.getY());
+
+        if (absValueX > absValueY) {
             if (playerX > creatureX) {
                 creature.setDirection(Direction.EAST);
                 if (creature.isCollidingWithTile(tiledMap)) {
@@ -37,7 +44,7 @@ public class HostileCreatureAI {
                     creature.moveY(tiledMap);
                     return;
                 }
-            }else if (playerX < creatureX) {
+            } else if (playerX < creatureX) {
                 creature.setDirection(Direction.WEST);
                 if (creature.isCollidingWithTile(tiledMap)) {
                     creature.setDirection(Direction.SOUTH);
@@ -46,7 +53,6 @@ public class HostileCreatureAI {
                 }
             }
             creature.moveX(tiledMap);
-
         }else {
             if (playerY > creatureY) {
                 creature.setDirection(Direction.NORTH);
@@ -66,13 +72,11 @@ public class HostileCreatureAI {
             creature.moveY(tiledMap);
         }
 
-        absValueX = Math.abs(creatureX - playerX);
-        absValueY = Math.abs(creatureY - playerY);
-
-
-        if (absValueX <= 30 && absValueY <= 30) {
+        if (absValueXRaw <= 30 && absValueYRaw <= 30) {
             if (player.isActive())
-                creature.setAttacking(true); creature.attack();
+                creature.setAttacking(true);
+            creature.attack();
+
         }
     }
 }

@@ -28,7 +28,7 @@ public class SpellAnimation {
         return right;
     }
 
-    private final float frameDuration = 1/20f;
+    private final float frameDuration = 1/32f;
 
     public SpellAnimation() {
 
