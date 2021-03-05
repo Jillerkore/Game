@@ -35,7 +35,7 @@ public class StarterWorld extends World {
         renderer.getBatch().dispose();
     }
     public void initializeComponents() {
-        teleporter = new Teleporter(22 * 32, 37 * 32, 22 * 32, 32 * 10, WorldType.STARTER_CAVE_WORLD);
+        teleporter = new Teleporter(22 * 32, 37 * 32, 10 * 32, 32 * 10, WorldType.STARTER_CAVE_WORLD);
         EntityManager.getInstance().getStarterWorldEntityList().add(teleporter);
     }
 }

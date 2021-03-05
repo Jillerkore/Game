@@ -92,6 +92,7 @@ public class Player extends Caster {
         }
         batch.draw(animation.getCurrentFrame(), getOffsetX(), getOffsetY());
         updateCamera();
+        System.out.println("Rendering player");
     }
 
 

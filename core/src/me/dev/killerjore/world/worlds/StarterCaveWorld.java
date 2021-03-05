@@ -38,7 +38,7 @@ public class StarterCaveWorld extends World {
 
     @Override
     public void initializeComponents() {
-        teleporter = new Teleporter(22 * 32, 8 * 32, 22 * 32, 32 * 36, WorldType.STARTER_WORLD);
+        teleporter = new Teleporter(10 * 32, 8 * 32, 22 * 32, 32 * 36, WorldType.STARTER_WORLD);
         EntityManager.getInstance().getStarterCaveEntityList().add(teleporter);
     }
 }
