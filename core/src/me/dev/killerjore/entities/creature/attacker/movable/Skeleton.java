@@ -4,8 +4,9 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import me.dev.killerjore.ai.HostileCreatureAI;
 import me.dev.killerjore.animations.bigCreaturesAnimation.animations.SkeletonAnimation;
-import me.dev.killerjore.entities.creature.MovableCreature;
+import me.dev.killerjore.entities.EntityManager;
 import me.dev.killerjore.entities.creature.attacker.Attacker;
+import me.dev.killerjore.entities.item.items.Bone;
 import me.dev.killerjore.textureRepository.TextureManager;
 import me.dev.killerjore.utils.Direction;
 
@@ -66,4 +67,8 @@ public class Skeleton extends Attacker {
     }
 
 
+    @Override
+    public void dropItem() {
+        EntityManager.getInstance().addEntity(new Bone(getX(), getY(), 32, 32, 32, 32));
+    }
 }

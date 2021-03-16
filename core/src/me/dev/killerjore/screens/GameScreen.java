@@ -11,7 +11,9 @@ import com.strongjoshua.console.GUIConsole;
 import me.dev.killerjore.Main;
 import me.dev.killerjore.audio.AudioManager;
 import me.dev.killerjore.console.ConsoleCommandExecutor;
+import me.dev.killerjore.entities.item.items.Weapon;
 import me.dev.killerjore.event.EventManager;
+import me.dev.killerjore.ui.inventory.Inventory;
 import me.dev.killerjore.textureRepository.TextureManager;
 import me.dev.killerjore.ui.UIManager;
 import me.dev.killerjore.entities.EntityManager;
@@ -62,9 +64,12 @@ public class GameScreen implements Screen {
     public void show() {
         Player player = new Player(23 * 32, 23 * 32, 64, 64, 25, 25, 20, 20, 20, 20, camera);
         Skeleton skeleton = new Skeleton(22 * 32, 19 * 32, 64, 64, 25, 25,20, 20, 20, 20, 70);
+        Weapon weapon = new Weapon(22 * 32, 22 * 32, 32, 32, 32, 32);
 
         EntityManager.getInstance().getStarterWorldEntityList().add(skeleton);
         EntityManager.getInstance().getStarterWorldEntityList().add(player);
+        EntityManager.getInstance().getStarterWorldEntityList().add(weapon);
+
     }
 
     @Override
@@ -79,6 +84,7 @@ public class GameScreen implements Screen {
         WorldManager.getInstance().getCurrentWorld().render(delta, camera);
         uiSpriteBatch.begin();
         UIManager.getInstance().render(uiSpriteBatch);
+        Inventory.getInstance().render(uiSpriteBatch);
         uiSpriteBatch.end();
 
         EntityManager.getInstance().dispose();

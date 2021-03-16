@@ -4,8 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import me.dev.killerjore.entities.EntityManager;
+import me.dev.killerjore.ui.inventory.Inventory;
 import me.dev.killerjore.screens.GameScreen;
-import me.dev.killerjore.utils.Direction;
 
 public class InputHandler implements InputProcessor {
 
@@ -23,7 +23,9 @@ public class InputHandler implements InputProcessor {
         if (Input.Keys.Y == keycode) {
             entities.getPlayer().toggleCameraUpdate();
         }
-
+        if (Input.Keys.E == keycode) {
+            Inventory.getInstance().toggleInventory();
+        }
         if (Input.Keys.C == keycode) {
             entities.getPlayer().setCasting(true);
         }
@@ -62,6 +64,9 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        if (button == Input.Buttons.LEFT) {
+            Inventory.getInstance().isLeftClicking = true;
+        }
         return false;
     }
 

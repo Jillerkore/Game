@@ -30,7 +30,7 @@ public abstract class World {
     public void fixTextureBleed(MapLayers mapLayer) {
         TiledMapTileLayer[] layers = new TiledMapTileLayer[3];
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < layers.length; i++) {
             layers[i] = (TiledMapTileLayer)mapLayer.get(i);
             for(int x = 0; x < layers[i].getWidth(); x++) {
                 for(int y = 0; y < layers[i].getHeight(); y++) {

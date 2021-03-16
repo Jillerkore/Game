@@ -9,6 +9,7 @@ import me.dev.killerjore.entities.creature.attacker.caster.Caster;
 import me.dev.killerjore.entities.statics.Teleporter;
 import me.dev.killerjore.event.EventManager;
 import me.dev.killerjore.event.events.playerEvent.PlayerMoveEvent;
+import me.dev.killerjore.ui.inventory.Inventory;
 import me.dev.killerjore.textureRepository.TextureManager;
 import me.dev.killerjore.world.WorldManager;
 
@@ -21,6 +22,8 @@ public class Player extends Caster {
     public boolean walkingUp, walkingDown, walkingLeft, walkingRight;
 
     private PlayerMoveEvent moveEvent;
+
+    private Inventory inventory;
 
     public boolean godMode = false;
 
@@ -54,6 +57,8 @@ public class Player extends Caster {
         walkingDown = false;
         walkingLeft = false;
         walkingRight = false;
+
+        inventory = Inventory.getInstance();
     }
 
     private void tick(TiledMap tiledMap) {
@@ -92,7 +97,6 @@ public class Player extends Caster {
         }
         batch.draw(animation.getCurrentFrame(), getOffsetX(), getOffsetY());
         updateCamera();
-        System.out.println("Rendering player");
     }
 
 
@@ -113,7 +117,7 @@ public class Player extends Caster {
         EntityManager.getInstance().activeEntityList().forEach(entity -> {
             /*
             Checks if the entity is an instance of the Teleporter class, if true, it'll handle
-            the teleportation if the enttiy's collision box and the teleporter's collision boxes
+            the teleportation if the entity's collision box and the teleporter's collision boxes
             are colliding. As simple as that ^_^
             */
             if (entity instanceof Teleporter) {

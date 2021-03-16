@@ -3,6 +3,7 @@ package me.dev.killerjore.entities;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import me.dev.killerjore.entities.item.Item;
 import me.dev.killerjore.entities.statics.Teleporter;
 import me.dev.killerjore.utils.Direction;
 
@@ -33,7 +34,7 @@ public abstract class Entity extends EntityAbstract {
         boolean colliding = false;
         // Iterates through every entity in the active entity list
         for (Entity entity : EntityManager.getInstance().activeEntityList()) {
-            if (!(entity instanceof Teleporter)) { // The entity mustn't be a teleporter, a separate code in the player class handles teleporter collision
+            if (!(entity instanceof Teleporter) && !(entity instanceof Item)) { // The entity mustn't be a teleporter, a separate code in the player class handles teleporter collision
                 if (entity == this) continue; // The entity cannot be this or it'll be stuck on a single tile as the game will think the entity is colliding (with itself)
                 if (collisionRectangle.intersects(entity.getCollisionBox())) {
                     colliding = true;
@@ -101,4 +102,7 @@ public abstract class Entity extends EntityAbstract {
     }
 
     public abstract void render(Batch batch, TiledMap tiledMap);
+
+    // Override this method if any entity drops item
+    public void dropItem() {}
 }

@@ -4,6 +4,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import me.dev.killerjore.textureRepository.entityTextures.PlayerTextureRepo;
 import me.dev.killerjore.textureRepository.entityTextures.SkeletonTextureRepo;
+import me.dev.killerjore.textureRepository.items.ItemTextureRepo;
 import me.dev.killerjore.textureRepository.particleTextureRepo.BloodParticleTextureRepo;
 import me.dev.killerjore.textureRepository.projectileTextures.FireballTextureRepo;
 
@@ -15,6 +16,7 @@ public class TextureManager {
     public TextureRepo skeletonTextureRepo;
     public TextureRepo particleTextureRepo;
     public FireballTextureRepo fireballTextureRepo;
+    public ItemTextureRepo itemTextureRepo;
 
     public static TextureManager getInstance() {
         if (instance == null) instance = new TextureManager();
@@ -47,9 +49,8 @@ public class TextureManager {
         assetManager.load("sprites/projectiles/spells/fireballDownUp.png", Texture.class);
         assetManager.load("sprites/projectiles/spells/fireballLeftRight.png", Texture.class);
 
+        assetManager.load("sprites/items/items1.png", Texture.class);
 
-
-        System.out.println("Finish loading");
         assetManager.finishLoading();
     }
 
@@ -58,6 +59,7 @@ public class TextureManager {
         skeletonTextureRepo = new SkeletonTextureRepo();
         particleTextureRepo = new BloodParticleTextureRepo();
         fireballTextureRepo = new FireballTextureRepo();
+        itemTextureRepo = new ItemTextureRepo();
     }
 
     public void dispose() {
@@ -65,6 +67,8 @@ public class TextureManager {
         skeletonTextureRepo.dispose();
         particleTextureRepo.dispose();
         assetManager.dispose();
+        fireballTextureRepo.dispose();
+        itemTextureRepo.dispose();
     }
 
 }

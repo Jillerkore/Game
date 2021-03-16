@@ -5,7 +5,8 @@ import me.dev.killerjore.world.worlds.StarterWorld;
 
 public class WorldManager {
 
-    private World starterWorld, starterCaveWorld;
+    private final World starterWorld;
+    private final World starterCaveWorld;
     private static WorldManager instance;
     private World currentWorld;
 
@@ -22,10 +23,8 @@ public class WorldManager {
     }
     public void setCurrentWorld(WorldType worldType) {
         if (worldType == WorldType.STARTER_WORLD) {
-            if (starterWorld == null) starterWorld = new StarterWorld();
             currentWorld = starterWorld;
         }if (worldType == WorldType.STARTER_CAVE_WORLD) {
-            if (starterCaveWorld == null) starterCaveWorld = new StarterCaveWorld();
             currentWorld = starterCaveWorld;
         }
     }

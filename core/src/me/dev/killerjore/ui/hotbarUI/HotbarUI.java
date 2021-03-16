@@ -16,15 +16,6 @@ public class HotbarUI {
 
         this.width = 400;
         this.height = 42;
-
-        hotbarTexture = new Texture("sprites/ui/hotBar.png");
     }
 
-    public void render(SpriteBatch batch) {
-        batch.draw(hotbarTexture, x, y, width,height);
-    }
-
-    public void dispose() {
-        hotbarTexture.dispose();
-    }
 }

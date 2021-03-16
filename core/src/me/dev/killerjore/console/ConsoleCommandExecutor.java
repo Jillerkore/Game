@@ -5,12 +5,18 @@ import com.strongjoshua.console.Console;
 import me.dev.killerjore.entities.EntityManager;
 import me.dev.killerjore.entities.creature.attacker.movable.Player;
 import me.dev.killerjore.entities.creature.attacker.movable.Skeleton;
+import me.dev.killerjore.entities.item.*;
+import me.dev.killerjore.entities.item.items.Bone;
+import me.dev.killerjore.entities.item.items.Medal;
+import me.dev.killerjore.entities.item.items.SpellBook;
+import me.dev.killerjore.entities.item.items.Weapon;
 import me.dev.killerjore.entities.projectile.projectiles.Fireball;
+import me.dev.killerjore.ui.inventory.Inventory;
 import me.dev.killerjore.utils.Direction;
 
 public class ConsoleCommandExecutor extends CommandExecutor {
 
-    private Console console;
+    private final Console console;
 
     public ConsoleCommandExecutor(Console console) {
         this.console = console;
@@ -113,5 +119,56 @@ public class ConsoleCommandExecutor extends CommandExecutor {
         console.log("Toggling god mode to: " + godMode);
         Player player = EntityManager.getInstance().getPlayer();
         player.godMode = godMode;
+    }
+
+    public void spawnItem(int x, int y, String itemType) {
+        Item item;
+
+        x *= 32;
+        y *= 32;
+
+        switch(itemType.toLowerCase()) {
+            case "bone":
+                item = new Bone(x, y, 32, 32, 32, 20);
+                break;
+            case "spellbook":
+                item = new SpellBook(x, y, 32, 32, 32, 32);
+                break;
+            case "weapon":
+                item = new Weapon(x, y, 32, 32, 32, 20);
+                break;
+            case "medal":
+                item = new Medal(x, y, 32, 32, 32, 32);
+                break;
+            default:
+                console.log("Error: Unidentifiable item type");
+                return;
+        }
+        EntityManager.getInstance().addEntity(item);
+    }
+    public void giveItem(String itemType, int count, int slotType) {
+        Item item;
+        switch (itemType.toLowerCase()) {
+            case "bone":
+                item = new Bone(0, 0, 32, 32, 32, 20);
+                break;
+            case "spellbook":
+                item = new SpellBook(0, 0, 32, 32, 32, 32);
+                break;
+            case "weapon":
+                item = new Weapon(0, 0, 32, 32, 32, 20);
+                break;
+            case "medal":
+                item = new Medal(0, 0, 32, 32, 32, 32);
+                break;
+            default:
+                console.log("Error: Unidentifiable item type");
+                return;
+        }
+        console.log("Added item to inventory: " + itemType);
+        item.setState(ItemState.PICKED_UP);
+        for (int i = 0; i < count; i++) {
+            Inventory.getInstance().addItem(item, slotType);
+        }
     }
 }

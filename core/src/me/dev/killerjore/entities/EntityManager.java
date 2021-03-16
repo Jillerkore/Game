@@ -12,7 +12,7 @@ public class EntityManager {
 
     private ArrayList<Entity> entities;
 
-    private ArrayList<Entity> starterWorldEntities, starterCaveEntities, pendingEntityList;
+    private ArrayList<Entity> starterWorldEntities, starterCaveEntities, pendingEntityList, pendingEntityRemoveList;
 
     private static EntityManager instance;
     private Player player;
@@ -36,6 +36,7 @@ public class EntityManager {
         starterCaveEntities = new ArrayList<>();
 
         pendingEntityList = new ArrayList<>();
+        pendingEntityRemoveList = new ArrayList<>();
 
         entities = starterWorldEntities;
     }
@@ -59,7 +60,9 @@ public class EntityManager {
 
         entities.forEach((entity) -> entity.render(batch, tiledMap));
         entities.addAll(pendingEntityList);
+        entities.removeAll(pendingEntityRemoveList);
         pendingEntityList.clear();
+        pendingEntityRemoveList.clear();
     }
 
     public void dispose() {
@@ -72,8 +75,19 @@ public class EntityManager {
 
     public void setActiveWorld(WorldType worldType) {
         this.activeWorld = worldType;
-        tick();
+
+        switch (worldType) {
+            case STARTER_WORLD:
+                starterWorldEntities.add(player);
+                break;
+            case STARTER_CAVE_WORLD:
+                starterCaveEntities.add(player);
+                break;
+        }
+
+        removeEntity(player);
     }
 
     public void addEntity(Entity entity) { pendingEntityList.add(entity); }
+    public void removeEntity(Entity entity) { pendingEntityRemoveList.add(entity); }
 }

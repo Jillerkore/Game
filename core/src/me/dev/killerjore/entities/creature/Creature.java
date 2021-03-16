@@ -2,13 +2,7 @@ package me.dev.killerjore.entities.creature;
 
 import com.badlogic.gdx.Gdx;
 import me.dev.killerjore.animations.bigCreaturesAnimation.BigCreatureAnimation;
-import me.dev.killerjore.entities.EntityManager;
-import me.dev.killerjore.event.EventManager;
-import me.dev.killerjore.event.events.entityEvent.EntityAttackEntityEvent;
-import me.dev.killerjore.event.events.entityEvent.EntityAttackEvent;
 import me.dev.killerjore.utils.Direction;
-
-import java.awt.*;
 
 public abstract class Creature extends CreatureAbstract {
 
@@ -48,7 +42,9 @@ public abstract class Creature extends CreatureAbstract {
         }
         if (animation.getDeathAnimation().isAnimationFinished(elapsedTime)) {
             setActive(false);
+            dropItem();
         }
         animation.setCurrentFrame(animation.getDeathAnimation().getKeyFrame(elapsedTime, true));
     }
+
 }
