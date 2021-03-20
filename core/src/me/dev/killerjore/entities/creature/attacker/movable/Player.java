@@ -9,8 +9,8 @@ import me.dev.killerjore.entities.creature.attacker.caster.Caster;
 import me.dev.killerjore.entities.statics.Teleporter;
 import me.dev.killerjore.event.EventManager;
 import me.dev.killerjore.event.events.playerEvent.PlayerMoveEvent;
-import me.dev.killerjore.ui.inventory.Inventory;
 import me.dev.killerjore.textureRepository.TextureManager;
+import me.dev.killerjore.ui.inventory.Inventory;
 import me.dev.killerjore.world.WorldManager;
 
 public class Player extends Caster {
@@ -20,10 +20,9 @@ public class Player extends Caster {
 
     private boolean updateCamEachFrame = false;
     public boolean walkingUp, walkingDown, walkingLeft, walkingRight;
+    public boolean picking = false;
 
     private PlayerMoveEvent moveEvent;
-
-    private Inventory inventory;
 
     public boolean godMode = false;
 
@@ -57,8 +56,6 @@ public class Player extends Caster {
         walkingDown = false;
         walkingLeft = false;
         walkingRight = false;
-
-        inventory = Inventory.getInstance();
     }
 
     private void tick(TiledMap tiledMap) {
@@ -135,4 +132,11 @@ public class Player extends Caster {
         });
     }
 
+    public boolean isPicking() {
+        return picking;
+    }
+
+    public void togglePicking() {
+        picking = !picking;
+    }
 }

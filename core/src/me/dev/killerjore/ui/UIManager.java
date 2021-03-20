@@ -1,8 +1,8 @@
 package me.dev.killerjore.ui;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import me.dev.killerjore.ui.inventory.Inventory;
 import me.dev.killerjore.ui.barUI.BarUIManager;
+import me.dev.killerjore.ui.inventory.Inventory;
 
 public class UIManager {
 

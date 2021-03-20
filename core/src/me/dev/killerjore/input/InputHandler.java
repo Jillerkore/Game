@@ -3,9 +3,10 @@ package me.dev.killerjore.input;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.math.Vector3;
 import me.dev.killerjore.entities.EntityManager;
-import me.dev.killerjore.ui.inventory.Inventory;
 import me.dev.killerjore.screens.GameScreen;
+import me.dev.killerjore.ui.inventory.Inventory;
 
 public class InputHandler implements InputProcessor {
 
@@ -14,12 +15,14 @@ public class InputHandler implements InputProcessor {
 
     public InputHandler(GameScreen screen) {
         entities = EntityManager.getInstance();
-        Gdx.input.setInputProcessor(this);
         this.screen = screen;
     }
 
     @Override
     public boolean keyDown(int keycode) {
+        if (Input.Keys.SHIFT_LEFT == keycode) {
+            entities.getPlayer().togglePicking();
+        }
         if (Input.Keys.Y == keycode) {
             entities.getPlayer().toggleCameraUpdate();
         }
@@ -64,10 +67,10 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        if (button == Input.Buttons.LEFT) {
-            Inventory.getInstance().isLeftClicking = true;
-        }
-        return false;
+        Vector3 coords = screen.getUiCamera().unproject(new Vector3(screenX, screenY, 0));
+        Inventory.getInstance().handleMouseInput((int)coords.x, (int)coords.y, button);
+
+        return true;
     }
 
     @Override

@@ -8,7 +8,7 @@ import me.dev.killerjore.textureRepository.TextureManager;
 public class Weapon extends Item {
 
     public Weapon(float x, float y, int width, int height, int collisionWidth, int collisionHeight) {
-        super(x, y, width, height, collisionWidth, collisionHeight);
+        super(x, y, width, height, collisionWidth, 20);
     }
 
     @Override

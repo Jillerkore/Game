@@ -2,10 +2,16 @@ package me.dev.killerjore.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScalingViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.strongjoshua.console.Console;
 import com.strongjoshua.console.GUIConsole;
 import me.dev.killerjore.Main;
@@ -13,26 +19,30 @@ import me.dev.killerjore.audio.AudioManager;
 import me.dev.killerjore.console.ConsoleCommandExecutor;
 import me.dev.killerjore.entities.item.items.Weapon;
 import me.dev.killerjore.event.EventManager;
-import me.dev.killerjore.ui.inventory.Inventory;
 import me.dev.killerjore.textureRepository.TextureManager;
 import me.dev.killerjore.ui.UIManager;
 import me.dev.killerjore.entities.EntityManager;
 import me.dev.killerjore.entities.creature.attacker.movable.Player;
 import me.dev.killerjore.entities.creature.attacker.movable.Skeleton;
 import me.dev.killerjore.input.InputHandler;
+import me.dev.killerjore.ui.inventory.Inventory;
 import me.dev.killerjore.world.WorldManager;
 
 public class GameScreen implements Screen {
 
     private Main main;
 
-    private OrthographicCamera camera;
+    private OrthographicCamera camera, uiCamera;
+    private Viewport viewport, uiViewport;
     private SpriteBatch uiSpriteBatch;
 
     private Console console;
 
-    public GameScreen(Main main) {
+    public OrthographicCamera getUiCamera() {
+        return uiCamera;
+    }
 
+    public GameScreen(Main main) {
         uiSpriteBatch = new SpriteBatch();
 
         Gdx.graphics.setWindowedMode(32 * 21, 32 * 13);
@@ -43,7 +53,14 @@ public class GameScreen implements Screen {
         camera.position.set(0, 0, 0);
         camera.update();
 
-        new InputHandler(this);
+        uiCamera = new OrthographicCamera();
+        uiCamera.setToOrtho(false);
+        uiViewport = new ScreenViewport();
+        uiViewport.setScreenSize(32 * 21, 32 * 13);
+        uiViewport.setCamera(uiCamera);
+
+        viewport = new ScalingViewport(Scaling.fit, 32 * 21 , 32 * 13, camera);
+        viewport.apply();
 
         /*
         * Initializing the singleton classes beforehand
@@ -52,6 +69,11 @@ public class GameScreen implements Screen {
         EventManager.getInstance();
         AudioManager.getInstance();
         EntityManager.getInstance();
+        Inventory.getInstance().setCamera(uiCamera);
+
+        InputMultiplexer im = new InputMultiplexer();
+        im.addProcessor(new InputHandler(this));
+        Gdx.input.setInputProcessor(im);
 
         console = new GUIConsole();
         console.setSizePercent(100, 50);
@@ -82,9 +104,10 @@ public class GameScreen implements Screen {
         }
 
         WorldManager.getInstance().getCurrentWorld().render(delta, camera);
+        uiSpriteBatch.setProjectionMatrix(uiCamera.combined);
         uiSpriteBatch.begin();
         UIManager.getInstance().render(uiSpriteBatch);
-        Inventory.getInstance().render(uiSpriteBatch);
+            Inventory.getInstance().render(uiSpriteBatch);
         uiSpriteBatch.end();
 
         EntityManager.getInstance().dispose();
@@ -95,7 +118,8 @@ public class GameScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        viewport.update(width, height);
+        viewport.apply();
     }
 
     @Override
@@ -115,7 +139,6 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-        System.out.println("Dispose called");
         WorldManager.getInstance().getCurrentWorld().dispose();
         uiSpriteBatch.dispose();
         UIManager.getInstance().dispose();

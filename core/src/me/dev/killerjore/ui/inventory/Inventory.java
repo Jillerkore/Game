@@ -1,9 +1,15 @@
 package me.dev.killerjore.ui.inventory;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
+import me.dev.killerjore.entities.EntityManager;
 import me.dev.killerjore.entities.item.Item;
+import me.dev.killerjore.entities.item.ItemState;
+import me.dev.killerjore.screens.GameScreen;
 import me.dev.killerjore.textureRepository.TextureManager;
 
 import java.util.ArrayList;
@@ -11,8 +17,13 @@ import java.util.Arrays;
 
 public class Inventory {
 
-    private ArrayList<Item> hotBar;
-    private ArrayList<Item> inventory;
+    private InventorySlot[] inventory;
+    private InventorySlot[] hotbar;
+
+    private Item selectedItem;
+    private OrthographicCamera camera;
+
+    private Vector3 mousePos;
 
     public static final int
 
@@ -37,17 +48,16 @@ public class Inventory {
     private final Texture inventoryTexture, hotbarTexture;
     private static Inventory instance;
 
-    public boolean isLeftClicking = false;
-
     public static Inventory getInstance() {
         if (instance == null) instance = new Inventory();
         return instance;
     }
 
-    public boolean isInventoryActive = false;
+    public void setCamera(OrthographicCamera camera) {
+        this.camera = camera;
+    }
 
-    public ArrayList<Item> getHotBarItems() { return hotBar; }
-    public ArrayList<Item> getInventoryItems() {return inventory;}
+    public boolean isInventoryActive = false;
 
     public void toggleInventory() {
         if (isInventoryActive)
@@ -57,8 +67,26 @@ public class Inventory {
     }
 
     private Inventory() {
-        hotBar = new ArrayList<>();
-        inventory = new ArrayList<>();
+        mousePos = new Vector3();
+
+        hotbar = new InventorySlot[9];
+        inventory = new InventorySlot[30];
+
+        for (int i = 0; i < hotbar.length; i++) {
+            hotbar[i] = new InventorySlot(HOTBAR_ITEM_START_RENDER_X + (HOTBAR_PADDING_BETWEEN_SLOTS * i), HOTBAR_ITEM_START_RENDER_Y, HOTBAR_ITEM_WIDTH, HOTBAR_ITEM_HEIGHT);
+        }
+
+        int index = 0;
+        int index1 = 0;
+
+        for (int i = 0; i < inventory.length; i++) {
+            inventory[i] = new InventorySlot(ITEM_START_RENDER_X + (PADDING_BETWEEN_SLOTS * index), ITEM_START_RENDER_Y + (PADDING_BETWEEN_SLOTS * index1), ITEM_WIDTH, ITEM_HEIGHT);
+            index++;
+            if (lastColumnOfInventory.contains(index)) {
+                index = 0;
+                index1 ++;
+            }
+        }
 
         inventoryTexture = TextureManager.getInstance().getAssetManager().get("sprites/ui/inventorySlots.png");
         hotbarTexture = TextureManager.getInstance().getAssetManager().get("sprites/ui/hotBar.png");
@@ -66,26 +94,23 @@ public class Inventory {
 
     public void render(SpriteBatch batch) {
 
-        int index = 0;
-        int index1 = 0;
+        mousePos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+        camera.unproject(mousePos);
 
         batch.draw(hotbarTexture, HOTBAR_START_X, HOTBAR_START_Y, 400, 42);
-        for (Item item : hotBar) {
-            batch.draw(item.getTexture(), HOTBAR_ITEM_START_RENDER_X + (index * HOTBAR_PADDING_BETWEEN_SLOTS), HOTBAR_ITEM_START_RENDER_Y, HOTBAR_ITEM_WIDTH, HOTBAR_ITEM_HEIGHT);
-            index ++;
+        for (InventorySlot slot : hotbar) {
+            if (slot.getHoldingItem() != null)
+                batch.draw(slot.getHoldingItem().getTexture(), slot.getX(), slot.getY(), slot.getWidth(), slot.getHeight());
         }
-
-        index = 0;
 
         if (isInventoryActive) {
             batch.draw(inventoryTexture, STARTING_X, STARTING_Y);
-            for (Item item : inventory) {
-                batch.draw(item.getTexture(), ITEM_START_RENDER_X + (PADDING_BETWEEN_SLOTS * index), ITEM_START_RENDER_Y + (PADDING_BETWEEN_SLOTS * index1), ITEM_WIDTH, ITEM_HEIGHT);
-                index++;
-                if (lastColumnOfInventory.contains(index)) {
-                    index = 0;
-                    index1++;
-                }
+            for (InventorySlot slot : inventory) {
+                if (slot.getHoldingItem() != null)
+                    batch.draw(slot.getHoldingItem().getTexture(), slot.getX(), slot.getY(), slot.getWidth(), slot.getHeight());
+            }
+            if (selectedItem != null) {
+                batch.draw(selectedItem.getTexture(), mousePos.x - 25, mousePos.y - 10, ITEM_WIDTH + 10, ITEM_HEIGHT + 10);
             }
         }
 
@@ -94,33 +119,101 @@ public class Inventory {
     public void addItem(Item item, int slotType) {
         if (slotType == 1) {
             if (!isInventoryFull())
-                inventory.add(item);
+                for (InventorySlot slot : inventory) {
+                    if (slot.getHoldingItem() == null) {
+                        slot.setHoldingItem(item);
+                        break;
+                    }
+                }
         }else {
             if (!isHotbarFull())
-                hotBar.add(item);
+                for (InventorySlot slot : hotbar) {
+                    if (slot.getHoldingItem() == null) {
+                        slot.setHoldingItem(item);
+                        break;
+                    }
+                }
         }
     }
     public void removeItem(Item item, int slotType) {
         if (slotType == 1) {
             if (!isInventoryFull())
-                inventory.remove(item);
+                for (InventorySlot slot : inventory) {
+                    if (slot.getHoldingItem() == null) continue;
+                    if (slot.getHoldingItem() == item) {
+                        slot.setHoldingItem(null);
+                    }
+                }
         }
         else {
             if (!isHotbarFull())
-                hotBar.remove(item);
+                for (InventorySlot slot : hotbar) {
+                    if (slot.getHoldingItem() == null) continue;
+                    if (slot.getHoldingItem() == item) {
+                        slot.setHoldingItem(null);
+                    }
+                }
         }
     }
 
     public boolean isInventoryFull() {
-        return inventory.size() >= 30;
+        int index = 0;
+        for (int i = 0; i < inventory.length; i++) {
+            if (inventory[i].getHoldingItem() != null) index++;
+        }
+        System.out.println(index);
+        return index >= 30;
     }
     public boolean isHotbarFull() {
-        return hotBar.size() >= 9;
+        int index = 0;
+        for (InventorySlot slot : hotbar) {
+            if (slot.getHoldingItem() != null) index++;
+        }
+        return index >= 9;
     }
 
-    public void handleMouseInput(int mouseX, int mouseY) {
-
+    public void handleMouseInput(int mouseX, int mouseY, int button) {
+        for (InventorySlot slot : inventory) {
+            mouseCallEvent(mouseX, mouseY, button, slot);
+        }
+        if (isInventoryActive)
+            for (InventorySlot slot : hotbar) {
+                mouseCallEvent(mouseX, mouseY, button, slot);
+            }
     }
+
+    private void mouseCallEvent(int mouseX, int mouseY, int button, InventorySlot slot) {
+        if (slot.isHovering(mouseX, mouseY)) {
+            if (button == Input.Buttons.LEFT) {
+                if (slot.getHoldingItem() == null && isHotbarFull())
+                    return;
+                if (selectedItem == null) {
+                    selectedItem = slot.getHoldingItem();
+                    slot.setHoldingItem(null);
+                }
+                else {
+                    if (slot.getHoldingItem() != null) {
+                        Item item = slot.getHoldingItem();
+                        slot.setHoldingItem(selectedItem);
+                        selectedItem = item;
+                    }else {
+                        slot.setHoldingItem(selectedItem);
+                        selectedItem = null;
+                    }
+                }
+            }else if (button == Input.Buttons.RIGHT) {
+                if (slot.getHoldingItem() == null)
+                    return;
+                Item item = slot.getHoldingItem();
+                item.setState(ItemState.IN_WORLD);
+                item.setOffsetX(EntityManager.getInstance().getPlayer().getX());
+                item.setOffsetY(EntityManager.getInstance().getPlayer().getY());
+                EntityManager.getInstance().addEntity(item);
+                removeItem(slot.getHoldingItem(), 1);
+            }
+        }
+    }
+
 
     public void dispose() {
         inventoryTexture.dispose();

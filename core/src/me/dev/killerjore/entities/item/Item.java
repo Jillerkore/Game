@@ -35,12 +35,17 @@ public abstract class Item extends Entity {
         updateCollisionBox();
         updatePos();
 
-        if (EntityManager.getInstance().getPlayer().getCollisionBox().intersects(getCollisionBox())
-                && state != ItemState.PICKED_UP
-                && !Inventory.getInstance().isInventoryFull()) {
-            state = ItemState.PICKED_UP;
-            Inventory.getInstance().addItem(this, 1);
-            EntityManager.getInstance().removeEntity(this);
+        if (EntityManager.getInstance().getPlayer().isPicking() && EntityManager.getInstance().getPlayer().getCollisionBox().intersects(getCollisionBox())
+                && state != ItemState.PICKED_UP) {
+            if (!Inventory.getInstance().isHotbarFull()) {
+                state = ItemState.PICKED_UP;
+                Inventory.getInstance().addItem(this, 2);
+                EntityManager.getInstance().removeEntity(this);
+            }else if (!Inventory.getInstance().isInventoryFull()) {
+                state = ItemState.PICKED_UP;
+                Inventory.getInstance().addItem(this, 2);
+                EntityManager.getInstance().removeEntity(this);
+            }
         }
     }
 
