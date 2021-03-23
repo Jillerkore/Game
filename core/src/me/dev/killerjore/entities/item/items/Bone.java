@@ -3,6 +3,7 @@ package me.dev.killerjore.entities.item.items;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import me.dev.killerjore.entities.item.Item;
+import me.dev.killerjore.entities.item.ItemId;
 import me.dev.killerjore.textureRepository.TextureManager;
 
 public class Bone extends Item {
@@ -18,5 +19,10 @@ public class Bone extends Item {
     @Override
     public void initializeTexture() {
         texture = TextureManager.getInstance().itemTextureRepo.getTextures()[6][3];
+    }
+
+    @Override
+    public void initializeId() {
+        id = ItemId.BONE;
     }
 }

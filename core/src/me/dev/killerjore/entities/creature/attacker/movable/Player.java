@@ -37,7 +37,7 @@ public class Player extends Caster {
 
     public Player(float x, float y, int width, int height, int collisionWidth, int collisionHeight, int maxHealth, int health, int maxStamina, int stamina, OrthographicCamera camera) {
 
-        super(x, y, width, height, collisionWidth, collisionHeight, health, maxHealth, stamina, maxStamina, 120f, 60, 60);
+        super(x, y, width, height, collisionWidth, collisionHeight, health, maxHealth, stamina, maxStamina, 120f, 60, 180);
         this.camera = camera;
 
         entityManager = EntityManager.getInstance();

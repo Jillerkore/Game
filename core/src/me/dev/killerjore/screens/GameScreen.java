@@ -19,6 +19,8 @@ import me.dev.killerjore.audio.AudioManager;
 import me.dev.killerjore.console.ConsoleCommandExecutor;
 import me.dev.killerjore.entities.item.items.Weapon;
 import me.dev.killerjore.event.EventManager;
+import me.dev.killerjore.save.GameData;
+import me.dev.killerjore.save.Save;
 import me.dev.killerjore.textureRepository.TextureManager;
 import me.dev.killerjore.ui.UIManager;
 import me.dev.killerjore.entities.EntityManager;
@@ -65,10 +67,12 @@ public class GameScreen implements Screen {
         /*
         * Initializing the singleton classes beforehand
          */
+        Save.getInstance();
         TextureManager.getInstance().initTextureRepos();
         EventManager.getInstance();
         AudioManager.getInstance();
         EntityManager.getInstance();
+        WorldManager.getInstance();
         Inventory.getInstance().setCamera(uiCamera);
 
         InputMultiplexer im = new InputMultiplexer();
@@ -84,14 +88,18 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
-        Player player = new Player(23 * 32, 23 * 32, 64, 64, 25, 25, 20, 20, 20, 20, camera);
-        Skeleton skeleton = new Skeleton(22 * 32, 19 * 32, 64, 64, 25, 25,20, 20, 20, 20, 70);
+        GameData data = Save.getInstance().getData();
+
+        Player player = new Player(data.getPlayerX(), data.getPlayerY(), 64, 64, 25, 25, data.getMaxHealth(), data.getHealth(), data.getMaxStamina(), data.getStamina(), camera);
         Weapon weapon = new Weapon(22 * 32, 22 * 32, 32, 32, 32, 32);
 
-        EntityManager.getInstance().getStarterWorldEntityList().add(skeleton);
-        EntityManager.getInstance().getStarterWorldEntityList().add(player);
-        EntityManager.getInstance().getStarterWorldEntityList().add(weapon);
+        EntityManager.getInstance().setActiveWorld(data.getWorldType());
+        WorldManager.getInstance().setCurrentWorld(data.getWorldType());
+        EntityManager.getInstance().addEntity(player);
+        EntityManager.getInstance().setPlayer(player);
 
+
+        EntityManager.getInstance().addEntity(weapon);
     }
 
     @Override

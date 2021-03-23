@@ -3,6 +3,7 @@ package me.dev.killerjore.entities;
 import me.dev.killerjore.utils.Direction;
 
 import java.awt.*;
+import java.io.Serializable;
 
 
 /*
@@ -10,7 +11,7 @@ Abstract class to decouple some properties from the Entity class to clean up the
 Entity class a tad bit more. Similar to the CreatureProperties, but since you cannot
 extend multiple classes on Java, I turned the creature properties into an object.
  */
-public abstract class EntityAbstract {
+public abstract class EntityAbstract implements Serializable {
     /*
      X and Y is the actual bottom left coordinate of the player while Offset X and Offset Y is
      the Bottom left cornor of the Player's texture. The dimension of x and y is 32x64 but the

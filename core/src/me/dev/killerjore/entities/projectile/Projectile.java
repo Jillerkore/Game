@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import me.dev.killerjore.entities.Entity;
 import me.dev.killerjore.entities.EntityManager;
+import me.dev.killerjore.entities.item.Item;
 import me.dev.killerjore.event.EventManager;
 import me.dev.killerjore.event.events.projectileEvent.ProjectileHitEntityEvent;
 import me.dev.killerjore.event.events.projectileEvent.ProjectileHitTileEvent;
@@ -40,6 +41,7 @@ public abstract class Projectile extends ProjectileAbstract {
         }
         for (Entity entity : EntityManager.getInstance().activeEntityList()) {
             if (entity.equals(this)) continue;
+            if (entity instanceof Item) continue;
             if (entity.getCollisionBox().intersects(getCollisionBox())) {
                 entityCollisionImpact(entity);
                 break;
@@ -62,6 +64,7 @@ public abstract class Projectile extends ProjectileAbstract {
         }
         for (Entity entity : EntityManager.getInstance().activeEntityList()) {
             if (entity.equals(this)) continue;
+            if (entity instanceof Item) continue;
             if (entity.getCollisionBox().intersects(getCollisionBox())) {
                 entityCollisionImpact(entity);
                 break;

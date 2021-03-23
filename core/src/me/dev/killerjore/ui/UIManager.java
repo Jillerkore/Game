@@ -3,6 +3,7 @@ package me.dev.killerjore.ui;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import me.dev.killerjore.ui.barUI.BarUIManager;
 import me.dev.killerjore.ui.inventory.Inventory;
+import me.dev.killerjore.ui.save.SaveText;
 
 public class UIManager {
 
@@ -19,10 +20,13 @@ public class UIManager {
     public void render(SpriteBatch batch) {
         barUIManager.renderBarUI(batch);
         Inventory.getInstance().render(batch);
+        SaveText.getInstance().render(batch);
     }
 
     public void dispose() {
         barUIManager.dispose();
+        Inventory.getInstance().dispose();
+        SaveText.getInstance().dispose();
     }
 
 }

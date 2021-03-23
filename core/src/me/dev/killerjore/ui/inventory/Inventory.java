@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Vector3;
 import me.dev.killerjore.entities.EntityManager;
 import me.dev.killerjore.entities.item.Item;
 import me.dev.killerjore.entities.item.ItemState;
-import me.dev.killerjore.screens.GameScreen;
+import me.dev.killerjore.save.Save;
 import me.dev.killerjore.textureRepository.TextureManager;
 
 import java.util.ArrayList;
@@ -48,6 +48,9 @@ public class Inventory {
     private final Texture inventoryTexture, hotbarTexture;
     private static Inventory instance;
 
+    public InventorySlot[] getInventorySlots() { return inventory; }
+    public InventorySlot[] getHotbarSlots() { return hotbar; }
+
     public static Inventory getInstance() {
         if (instance == null) instance = new Inventory();
         return instance;
@@ -85,6 +88,19 @@ public class Inventory {
             if (lastColumnOfInventory.contains(index)) {
                 index = 0;
                 index1 ++;
+            }
+        }
+        if (Save.getInstance().isInitialized()) {
+            for (int i = 0; i < 30; i++) {
+                inventory[i].setHoldingItem(
+                        Item.getItemById(Save.getInstance().getData().getInventoryItems()[i].getId())
+                );
+
+                if (i < 9) {
+                    hotbar[i].setHoldingItem(
+                            Item.getItemById(Save.getInstance().getData().getHotbarItems()[i].getId())
+                    );
+                }
             }
         }
 
@@ -135,25 +151,8 @@ public class Inventory {
                 }
         }
     }
-    public void removeItem(Item item, int slotType) {
-        if (slotType == 1) {
-            if (!isInventoryFull())
-                for (InventorySlot slot : inventory) {
-                    if (slot.getHoldingItem() == null) continue;
-                    if (slot.getHoldingItem() == item) {
-                        slot.setHoldingItem(null);
-                    }
-                }
-        }
-        else {
-            if (!isHotbarFull())
-                for (InventorySlot slot : hotbar) {
-                    if (slot.getHoldingItem() == null) continue;
-                    if (slot.getHoldingItem() == item) {
-                        slot.setHoldingItem(null);
-                    }
-                }
-        }
+    public void removeItem(InventorySlot slot) {
+        slot.setHoldingItem(null);
     }
 
     public boolean isInventoryFull() {
@@ -161,7 +160,6 @@ public class Inventory {
         for (int i = 0; i < inventory.length; i++) {
             if (inventory[i].getHoldingItem() != null) index++;
         }
-        System.out.println(index);
         return index >= 30;
     }
     public boolean isHotbarFull() {
@@ -174,22 +172,22 @@ public class Inventory {
 
     public void handleMouseInput(int mouseX, int mouseY, int button) {
         for (InventorySlot slot : inventory) {
-            mouseCallEvent(mouseX, mouseY, button, slot);
+            mouseCallEvent(mouseX, mouseY, button, slot, 1);
         }
         if (isInventoryActive)
             for (InventorySlot slot : hotbar) {
-                mouseCallEvent(mouseX, mouseY, button, slot);
+                mouseCallEvent(mouseX, mouseY, button, slot, 2);
             }
     }
 
-    private void mouseCallEvent(int mouseX, int mouseY, int button, InventorySlot slot) {
+    private void mouseCallEvent(int mouseX, int mouseY, int button, InventorySlot slot, int slotType) {
         if (slot.isHovering(mouseX, mouseY)) {
             if (button == Input.Buttons.LEFT) {
-                if (slot.getHoldingItem() == null && isHotbarFull())
-                    return;
                 if (selectedItem == null) {
-                    selectedItem = slot.getHoldingItem();
-                    slot.setHoldingItem(null);
+                    if (slot.getHoldingItem() != null) {
+                        selectedItem = slot.getHoldingItem();
+                        slot.setHoldingItem(null);
+                    }
                 }
                 else {
                     if (slot.getHoldingItem() != null) {
@@ -209,7 +207,7 @@ public class Inventory {
                 item.setOffsetX(EntityManager.getInstance().getPlayer().getX());
                 item.setOffsetY(EntityManager.getInstance().getPlayer().getY());
                 EntityManager.getInstance().addEntity(item);
-                removeItem(slot.getHoldingItem(), 1);
+                slot.setHoldingItem(null);
             }
         }
     }

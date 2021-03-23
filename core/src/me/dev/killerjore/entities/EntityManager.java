@@ -3,6 +3,7 @@ package me.dev.killerjore.entities;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import me.dev.killerjore.entities.creature.attacker.movable.Player;
+import me.dev.killerjore.entities.item.Item;
 import me.dev.killerjore.world.WorldType;
 
 import java.util.ArrayList;
@@ -38,7 +39,6 @@ public class EntityManager {
         pendingEntityList = new ArrayList<>();
         pendingEntityRemoveList = new ArrayList<>();
 
-        entities = starterWorldEntities;
     }
 
     public void setPlayer(Player player) { this.player = player; }
@@ -51,14 +51,25 @@ public class EntityManager {
             entities = starterCaveEntities;
         }
 
+        if (!entities.contains(player)) {
+            addEntity(player);
+        }
+
         entities.sort(entitySorter);
         dispose();
     }
 
     public void renderAllEntities(Batch batch, TiledMap tiledMap) {
         tick();
-
-        entities.forEach((entity) -> entity.render(batch, tiledMap));
+        entities.forEach(e -> {
+            if (e instanceof Item) {
+                e.render(batch, tiledMap);
+            }
+        });
+        entities.forEach((entity) -> {
+            if (!(entity instanceof Item))
+                entity.render(batch, tiledMap);
+        });
         entities.addAll(pendingEntityList);
         entities.removeAll(pendingEntityRemoveList);
         pendingEntityList.clear();

@@ -9,6 +9,9 @@ public class WorldManager {
     private final World starterCaveWorld;
     private static WorldManager instance;
     private World currentWorld;
+    private WorldType currentWorldType;
+
+    public WorldType getCurrentWorldType() { return currentWorldType; }
 
     public static WorldManager getInstance() { if (instance == null) instance = new WorldManager(); return instance; }
 
@@ -27,5 +30,6 @@ public class WorldManager {
         }if (worldType == WorldType.STARTER_CAVE_WORLD) {
             currentWorld = starterCaveWorld;
         }
+        currentWorldType = worldType;
     }
 }

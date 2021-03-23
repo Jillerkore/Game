@@ -2,7 +2,9 @@ package me.dev.killerjore.ui.inventory;
 
 import me.dev.killerjore.entities.item.Item;
 
-public class InventorySlot {
+import java.io.Serializable;
+
+public class InventorySlot implements Serializable {
 
     private int x;
     private int y;

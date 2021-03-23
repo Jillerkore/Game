@@ -1,6 +1,8 @@
 package me.dev.killerjore.world;
 
-public enum WorldType {
+import java.io.Serializable;
+
+public enum WorldType implements Serializable {
 
     STARTER_WORLD,
     STARTER_CAVE_WORLD;

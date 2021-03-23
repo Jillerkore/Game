@@ -5,8 +5,11 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector3;
 import me.dev.killerjore.entities.EntityManager;
+import me.dev.killerjore.save.Save;
 import me.dev.killerjore.screens.GameScreen;
 import me.dev.killerjore.ui.inventory.Inventory;
+
+import java.io.IOException;
 
 public class InputHandler implements InputProcessor {
 
@@ -20,6 +23,15 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
+        if (Input.Keys.F5 == keycode) {
+            try {
+                Save.getInstance().save();
+                System.out.println("saved");
+            } catch (IOException e) {
+                e.printStackTrace();
+                Gdx.app.exit();
+            }
+        }
         if (Input.Keys.SHIFT_LEFT == keycode) {
             entities.getPlayer().togglePicking();
         }
@@ -49,6 +61,8 @@ public class InputHandler implements InputProcessor {
     }
     @Override
     public boolean keyUp (int keycode){
+        if (keycode == Input.Keys.SHIFT_LEFT)
+            entities.getPlayer().togglePicking();
         if (keycode == Input.Keys.W)
             entities.getPlayer().walkingUp = false;
         if (keycode == Input.Keys.A)

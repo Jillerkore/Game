@@ -26,7 +26,7 @@ public class BigCreatureAnimation {
     private static final float frameDurationWalk = 1/7f;
     private static final float frameDurationAttack = 1/15f;
     private static final float frameDurationDeath = 1/2f;
-    private static final float frameDurationCast = 1/15f;
+    private static final float frameDurationCast = 1/12f;
 
     public BigCreatureAnimation(TextureRepo repo) {
         textures = repo.getTextures();
