@@ -8,6 +8,8 @@ import me.dev.killerjore.entities.item.items.Bone;
 import me.dev.killerjore.entities.item.items.Medal;
 import me.dev.killerjore.entities.item.items.SpellBook;
 import me.dev.killerjore.entities.item.items.Weapon;
+import me.dev.killerjore.event.EventManager;
+import me.dev.killerjore.event.events.playerEvent.ItemPickEvent;
 import me.dev.killerjore.ui.inventory.Inventory;
 
 public abstract class Item extends Entity {
@@ -15,6 +17,8 @@ public abstract class Item extends Entity {
     private ItemState state;
     protected TextureRegion texture;
     protected int id;
+
+    private ItemPickEvent event;
 
     public ItemState getState() { return state; }
     public void setState(ItemState state) { this.state = state; }
@@ -40,15 +44,7 @@ public abstract class Item extends Entity {
         if (EntityManager.getInstance().getPlayer().isPicking() && EntityManager.getInstance().getPlayer().getCollisionBox().intersects(getCollisionBox())
                 && state != ItemState.PICKED_UP) {
             EntityManager.getInstance().getPlayer().togglePicking();
-            if (!Inventory.getInstance().isHotbarFull()) {
-                state = ItemState.PICKED_UP;
-                Inventory.getInstance().addItem(this, 2);
-                EntityManager.getInstance().removeEntity(this);
-            }else if (!Inventory.getInstance().isInventoryFull()) {
-                state = ItemState.PICKED_UP;
-                Inventory.getInstance().addItem(this, 1);
-                EntityManager.getInstance().removeEntity(this);
-            }
+            callEvent();
         }
     }
 
@@ -85,5 +81,10 @@ public abstract class Item extends Entity {
     }
     public static Item getItemById(int id) {
         return getItemById(id, 0, 0);
+    }
+
+    private void callEvent() {
+        event = new ItemPickEvent(EntityManager.getInstance().getPlayer(), this);
+        EventManager.getInstance().invokeEventMethods(event);
     }
 }

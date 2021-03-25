@@ -8,7 +8,7 @@ public class SaveText {
     private static SaveText instance;
     public static SaveText getInstance() { if (instance == null) instance = new SaveText(); return instance; }
 
-    private BitmapFont textRender;
+    private final BitmapFont textRender;
 
     private int renderDurInFrames = 0;
 

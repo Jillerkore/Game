@@ -100,6 +100,8 @@ public class GameScreen implements Screen {
 
 
         EntityManager.getInstance().addEntity(weapon);
+
+        AudioManager.getInstance().inGameMusic.loop();
     }
 
     @Override

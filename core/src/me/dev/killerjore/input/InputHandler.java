@@ -26,7 +26,6 @@ public class InputHandler implements InputProcessor {
         if (Input.Keys.F5 == keycode) {
             try {
                 Save.getInstance().save();
-                System.out.println("saved");
             } catch (IOException e) {
                 e.printStackTrace();
                 Gdx.app.exit();

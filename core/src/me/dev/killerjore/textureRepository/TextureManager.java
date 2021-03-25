@@ -28,8 +28,6 @@ public class TextureManager {
     public AssetManager getAssetManager() { return assetManager; }
 
     private TextureManager() {
-
-        System.out.println("Asset manager");
         assetManager = new AssetManager();
 
         assetManager.load("sprites/particles/bloodParticle1.png", Texture.class);

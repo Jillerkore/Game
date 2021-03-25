@@ -49,7 +49,6 @@ project(":desktop") {
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         api "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
 
-        compile "org.projectlombok:lombok:1.16.16"
         compile "com.strongjoshua:libgdx-inGameConsole:1.0.0"
     }
 
@@ -63,7 +62,6 @@ project(":core") {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
 
-        compileOnly "org.projectlombok:lombok:1.16.16"
         compile "com.strongjoshua:libgdx-inGameConsole:1.0.0"
 
     }
