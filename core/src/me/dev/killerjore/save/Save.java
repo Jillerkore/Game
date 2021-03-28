@@ -5,7 +5,7 @@ import com.badlogic.gdx.files.FileHandle;
 import me.dev.killerjore.entities.EntityManager;
 import me.dev.killerjore.entities.creature.attacker.movable.Player;
 import me.dev.killerjore.ui.inventory.Inventory;
-import me.dev.killerjore.ui.inventory.InventorySlot;
+import me.dev.killerjore.ui.uiModels.InventorySlot;
 import me.dev.killerjore.ui.save.SaveText;
 import me.dev.killerjore.world.WorldManager;
 

@@ -44,9 +44,7 @@ public class Fireball extends Projectile {
     public void render(Batch batch, TiledMap tiledMap) {
 
         tick();
-
-        moveX(tiledMap);
-        moveY(tiledMap);
+        move(tiledMap);
 
         updatePos();
 
@@ -55,5 +53,8 @@ public class Fireball extends Projectile {
 
     private void tick() {
         elapsedTime += Gdx.graphics.getDeltaTime();
+        if (distanceTraveledInTiles > 5) {
+            setActive(false);
+        }
     }
 }

@@ -1,4 +1,4 @@
-package me.dev.killerjore.ui.inventory;
+package me.dev.killerjore.ui.uiModels;
 
 import me.dev.killerjore.entities.item.Item;
 

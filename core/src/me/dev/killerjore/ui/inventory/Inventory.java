@@ -11,6 +11,8 @@ import me.dev.killerjore.entities.item.Item;
 import me.dev.killerjore.entities.item.ItemState;
 import me.dev.killerjore.save.Save;
 import me.dev.killerjore.textureRepository.TextureManager;
+import me.dev.killerjore.ui.uiModels.EquipmentSlot;
+import me.dev.killerjore.ui.uiModels.InventorySlot;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,9 +27,11 @@ public class Inventory {
 
     private Vector3 mousePos;
 
+    private EquipmentSlot slots;
+
     public static final int
 
-            STARTING_X = 165,
+            STARTING_X = 60,
             STARTING_Y = 100,
             ITEM_START_RENDER_X = STARTING_X + 5,
             ITEM_START_RENDER_Y = STARTING_Y + 10,
@@ -70,6 +74,8 @@ public class Inventory {
     }
 
     private Inventory() {
+        slots = new EquipmentSlot();
+
         mousePos = new Vector3();
 
         hotbar = new InventorySlot[9];
@@ -125,6 +131,11 @@ public class Inventory {
                 if (slot.getHoldingItem() != null)
                     batch.draw(slot.getHoldingItem().getTexture(), slot.getX(), slot.getY(), slot.getWidth(), slot.getHeight());
             }
+            for (InventorySlot slot : slots.getSlots()) {
+                if (slot.getHoldingItem() != null) {
+                    batch.draw(slot.getHoldingItem().getTexture(), slot.getX() + EquipmentSlot.ITEM_START_PADDING_X, slot.getY() + EquipmentSlot.ITEM_START_PADDING_Y, slot.getWidth(), slot.getHeight());
+                }
+            }
             if (selectedItem != null) {
                 batch.draw(selectedItem.getTexture(), mousePos.x - 25, mousePos.y - 10, ITEM_WIDTH + 10, ITEM_HEIGHT + 10);
             }
@@ -174,13 +185,19 @@ public class Inventory {
         for (InventorySlot slot : inventory) {
             mouseCallEvent(mouseX, mouseY, button, slot, 1);
         }
-        if (isInventoryActive)
+        if (isInventoryActive) {
             for (InventorySlot slot : hotbar) {
                 mouseCallEvent(mouseX, mouseY, button, slot, 2);
             }
+            for (InventorySlot slot : slots.getSlots()) {
+                mouseCallEvent(mouseX, mouseY, button, slot, 3);
+            }
+        }
     }
 
     private void mouseCallEvent(int mouseX, int mouseY, int button, InventorySlot slot, int slotType) {
+        System.out.println(mouseX);
+        System.out.println(mouseY);
         if (slot.isHovering(mouseX, mouseY)) {
             if (button == Input.Buttons.LEFT) {
                 if (selectedItem == null) {

@@ -7,6 +7,7 @@ import me.dev.killerjore.textureRepository.entityTextures.SkeletonTextureRepo;
 import me.dev.killerjore.textureRepository.items.ItemTextureRepo;
 import me.dev.killerjore.textureRepository.particleTextureRepo.BloodParticleTextureRepo;
 import me.dev.killerjore.textureRepository.projectileTextures.FireballTextureRepo;
+import me.dev.killerjore.textureRepository.uiTextureRepo.UITextureRepo;
 
 public class TextureManager {
 
@@ -17,6 +18,7 @@ public class TextureManager {
     public TextureRepo particleTextureRepo;
     public FireballTextureRepo fireballTextureRepo;
     public ItemTextureRepo itemTextureRepo;
+    public UITextureRepo uiTextureRepo;
 
     public static TextureManager getInstance() {
         if (instance == null) instance = new TextureManager();
@@ -43,6 +45,7 @@ public class TextureManager {
         assetManager.load("sprites/ui/middleStaminaBox.png", Texture.class);
         assetManager.load("sprites/ui/titleScreen.png", Texture.class);
         assetManager.load("sprites/ui/inventorySlots.png", Texture.class);
+        assetManager.load("sprites/ui/settingsJournalAsset.png", Texture.class);
 
         assetManager.load("sprites/projectiles/spells/fireballDownUp.png", Texture.class);
         assetManager.load("sprites/projectiles/spells/fireballLeftRight.png", Texture.class);
@@ -58,6 +61,7 @@ public class TextureManager {
         particleTextureRepo = new BloodParticleTextureRepo();
         fireballTextureRepo = new FireballTextureRepo();
         itemTextureRepo = new ItemTextureRepo();
+        uiTextureRepo = new UITextureRepo();
     }
 
     public void dispose() {
@@ -67,6 +71,7 @@ public class TextureManager {
         assetManager.dispose();
         fireballTextureRepo.dispose();
         itemTextureRepo.dispose();
+        uiTextureRepo.dispose();
     }
 
 }

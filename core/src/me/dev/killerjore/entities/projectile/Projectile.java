@@ -20,6 +20,8 @@ public abstract class Projectile extends ProjectileAbstract {
     protected float paddingCollisionX;
     protected float paddingCollisionY;
 
+    protected float distanceTraveledInTiles = 0;
+
     public Projectile(float x, float y, int width, int height, int collisionWidth, int collisionHeight, float speed, Direction direction) {
         super(x, y, width, height, collisionWidth, collisionHeight, speed);
         setSpeed(speed);
@@ -70,6 +72,13 @@ public abstract class Projectile extends ProjectileAbstract {
                 break;
             }
         }
+    }
+
+    public void move(TiledMap map) {
+        moveX(map);
+        moveY(map);
+
+        distanceTraveledInTiles += (getSpeed() * Gdx.graphics.getDeltaTime()) / 32;
     }
 
     protected void updatePos() {

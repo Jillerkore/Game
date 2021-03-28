@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector3;
 import me.dev.killerjore.entities.EntityManager;
 import me.dev.killerjore.save.Save;
 import me.dev.killerjore.screens.GameScreen;
+import me.dev.killerjore.ui.UIManager;
 import me.dev.killerjore.ui.inventory.Inventory;
 
 import java.io.IOException;
@@ -81,14 +82,15 @@ public class InputHandler implements InputProcessor {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         Vector3 coords = screen.getUiCamera().unproject(new Vector3(screenX, screenY, 0));
-        Inventory.getInstance().handleMouseInput((int)coords.x, (int)coords.y, button);
-
+        UIManager.getInstance().clickEvent((int)coords.x, (int)coords.y, button);
         return true;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return false;
+        Vector3 coords = screen.getUiCamera().unproject(new Vector3(screenX, screenY, 0));
+        UIManager.getInstance().unClickEvent((int)coords.x, (int)coords.y, button);
+        return true;
     }
 
     @Override

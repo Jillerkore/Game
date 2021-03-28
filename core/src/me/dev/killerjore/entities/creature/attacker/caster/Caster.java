@@ -13,6 +13,9 @@ public abstract class Caster extends Attacker {
     private boolean playCastAnimation = false;
     private boolean isCasting = false;
 
+    float tempX = 0;
+    float tempY = 0;
+
     public boolean isCasting() { return isCasting; }
     public void setCasting(boolean casting) {this.isCasting = casting;}
 
@@ -40,6 +43,12 @@ public abstract class Caster extends Attacker {
             } else {
                 castAnimationElapsedTime = 0;
                 setCasting(false);
+
+                // Cast the fireball after animation is over
+                Fireball fireball = new Fireball(tempX, tempY, 32, 32, 32, 32, 150, getDirection());
+                EntityManager.getInstance().addEntity(fireball);
+                tempX = 0;
+                tempY = 0;
             }
         }
     }
@@ -50,11 +59,6 @@ public abstract class Caster extends Attacker {
 
                 playCastAnimation = true;
                 castElapsedTime = 0;
-
-                Fireball fireball;
-
-                float tempX= 0;
-                float tempY = 0;
 
                 switch (getDirection()) {
 
@@ -79,8 +83,6 @@ public abstract class Caster extends Attacker {
                         tempY = getY() - 32;
                         break;
                 }
-                fireball = new Fireball(tempX, tempY, 32, 32, 32, 32, 150, getDirection());
-                EntityManager.getInstance().addEntity(fireball);
             }
 
         }
