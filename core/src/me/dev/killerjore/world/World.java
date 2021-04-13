@@ -7,6 +7,8 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import me.dev.killerjore.entities.EntityManager;
+import me.dev.killerjore.particles.ParticleManager;
 
 public abstract class World {
 
@@ -23,7 +25,18 @@ public abstract class World {
         initializeComponents();
     }
 
-    public abstract void render(float deltaTime, OrthographicCamera camera);
+    public void render(float deltaTime, OrthographicCamera camera) {
+        renderer.setView(camera);
+
+        renderer.getBatch().begin();
+        renderer.renderTileLayer((TiledMapTileLayer) layers.get(0));
+        renderer.renderTileLayer((TiledMapTileLayer) layers.get(1));
+        if (layers.get(3) != null) renderer.renderTileLayer((TiledMapTileLayer) layers.get(3));
+        EntityManager.getInstance().renderAllEntities(renderer.getBatch(), map);
+        ParticleManager.getInstance().render(renderer.getBatch());
+        renderer.renderTileLayer((TiledMapTileLayer) layers.get(2));
+        renderer.getBatch().end();
+    }
     public abstract void dispose();
     public abstract void initializeComponents();
 

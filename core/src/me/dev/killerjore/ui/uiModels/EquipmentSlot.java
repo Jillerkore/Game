@@ -16,8 +16,8 @@ public class EquipmentSlot {
             HELM_X = START_X + 397,
             HELM_Y = START_Y + 270,
 
-    CHEST_X = START_X + 317,
-            CHEST_Y = START_Y + 211,
+    CHEST_X = 369,
+            CHEST_Y = 309,
 
     ACCONE_X = 372,
             ACCONE_Y = 182,
@@ -25,20 +25,60 @@ public class EquipmentSlot {
     ACCTWO_X = 536,
             ACCTWO_Y = 182,
 
-    WEAPON_X = START_X + 317,
-            WEAPON_Y = START_Y + 150,
+    WEAPON_X = 370,
+            WEAPON_Y = 246,
 
     ARTIFACT_X = START_X + 397,
             ARTIFACT_Y = START_Y + 29,
 
-    PENDANT_X = START_X + 480,
-            PENDANT_Y = START_Y + 150,
+    PENDANT_X = 532,
+            PENDANT_Y = START_Y + 246,
 
-    SHIELD_X = START_X + 480,
-            SHIELD_Y = START_Y + 211;
+    SHIELD_X = 532,
+            SHIELD_Y = 309;
 
     private final InventorySlot
-            helm, chestplate, shield, pendant, weapon, accessoryOne, accessoryTwo, artifact;
+            helm;
+
+    public InventorySlot getHelm() {
+        return helm;
+    }
+
+    public InventorySlot getChestplate() {
+        return chestplate;
+    }
+
+    public InventorySlot getShield() {
+        return shield;
+    }
+
+    public InventorySlot getPendant() {
+        return pendant;
+    }
+
+    public InventorySlot getWeapon() {
+        return weapon;
+    }
+
+    public InventorySlot getAccessoryOne() {
+        return accessoryOne;
+    }
+
+    public InventorySlot getAccessoryTwo() {
+        return accessoryTwo;
+    }
+
+    public InventorySlot getArtifact() {
+        return artifact;
+    }
+
+    private final InventorySlot chestplate;
+    private final InventorySlot shield;
+    private final InventorySlot pendant;
+    private final InventorySlot weapon;
+    private final InventorySlot accessoryOne;
+    private final InventorySlot accessoryTwo;
+    private final InventorySlot artifact;
 
 
     public EquipmentSlot() {
@@ -51,6 +91,15 @@ public class EquipmentSlot {
         accessoryTwo = new InventorySlot(ACCTWO_X, ACCTWO_Y, ITEM_WIDTH, ITEM_HEIGHT);
         artifact = new InventorySlot(ARTIFACT_X, ARTIFACT_Y, ITEM_WIDTH, ITEM_HEIGHT);
         weapon = new InventorySlot(WEAPON_X, WEAPON_Y, ITEM_WIDTH, ITEM_HEIGHT);
+
+        helm.setId(1);
+        chestplate.setId(1);
+        shield.setId(1);
+        pendant.setId(1);
+        accessoryOne.setId(1);
+        accessoryTwo.setId(1);
+        artifact.setId(1);
+        weapon.setId(1);
 
     }
 

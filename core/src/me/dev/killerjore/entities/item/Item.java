@@ -17,12 +17,14 @@ public abstract class Item extends Entity {
     private ItemState state;
     protected TextureRegion texture;
     protected int id;
+    protected ItemType itemType;
 
     private ItemPickEvent event;
 
     public ItemState getState() { return state; }
     public void setState(ItemState state) { this.state = state; }
     public int getId() { return id; }
+    public ItemType getItemType() { return this.itemType; }
 
     public TextureRegion getTexture() { return texture; }
 

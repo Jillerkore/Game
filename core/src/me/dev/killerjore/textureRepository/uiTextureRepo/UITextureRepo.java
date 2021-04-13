@@ -14,4 +14,9 @@ public class UITextureRepo  extends TextureRepo {
         journalClicked = getTextures()[1][1];
         journalUnclicked = getTextures()[0][1];
     }
+
+    @Override
+    public void dispose() {
+        settingsClicked.getTexture().dispose();
+    }
 }

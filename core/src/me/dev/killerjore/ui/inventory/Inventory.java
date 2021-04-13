@@ -9,6 +9,8 @@ import com.badlogic.gdx.math.Vector3;
 import me.dev.killerjore.entities.EntityManager;
 import me.dev.killerjore.entities.item.Item;
 import me.dev.killerjore.entities.item.ItemState;
+import me.dev.killerjore.event.EventManager;
+import me.dev.killerjore.event.events.playerEvent.ItemDropEvent;
 import me.dev.killerjore.save.Save;
 import me.dev.killerjore.textureRepository.TextureManager;
 import me.dev.killerjore.ui.uiModels.EquipmentSlot;
@@ -24,6 +26,8 @@ public class Inventory {
 
     private Item selectedItem;
     private OrthographicCamera camera;
+
+    private ItemDropEvent dropEvent;
 
     private Vector3 mousePos;
 
@@ -67,13 +71,11 @@ public class Inventory {
     public boolean isInventoryActive = false;
 
     public void toggleInventory() {
-        if (isInventoryActive)
-            isInventoryActive = false;
-        else
-            isInventoryActive = true;
+        isInventoryActive = !isInventoryActive;
     }
 
     private Inventory() {
+
         slots = new EquipmentSlot();
 
         mousePos = new Vector3();
@@ -217,14 +219,9 @@ public class Inventory {
                     }
                 }
             }else if (button == Input.Buttons.RIGHT) {
-                if (slot.getHoldingItem() == null)
-                    return;
-                Item item = slot.getHoldingItem();
-                item.setState(ItemState.IN_WORLD);
-                item.setOffsetX(EntityManager.getInstance().getPlayer().getX());
-                item.setOffsetY(EntityManager.getInstance().getPlayer().getY());
-                EntityManager.getInstance().addEntity(item);
-                slot.setHoldingItem(null);
+
+                dropEvent = new ItemDropEvent(EntityManager.getInstance().getPlayer(), slot);
+                EventManager.getInstance().invokeEventMethods(dropEvent);
             }
         }
     }

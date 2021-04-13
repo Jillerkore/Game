@@ -1,9 +1,13 @@
 package me.dev.killerjore.entities.creature.attacker.caster;
 
 import com.badlogic.gdx.Gdx;
+import me.dev.killerjore.audio.AudioManager;
 import me.dev.killerjore.entities.EntityManager;
 import me.dev.killerjore.entities.creature.attacker.Attacker;
 import me.dev.killerjore.entities.projectile.projectiles.Fireball;
+import me.dev.killerjore.event.EventManager;
+import me.dev.killerjore.event.events.Event;
+import me.dev.killerjore.event.events.entityEvent.EntityMagicCastEvent;
 
 public abstract class Caster extends Attacker {
 
@@ -12,6 +16,8 @@ public abstract class Caster extends Attacker {
     private int castElapsedTime;
     private boolean playCastAnimation = false;
     private boolean isCasting = false;
+
+    private EntityMagicCastEvent event;
 
     float tempX = 0;
     float tempY = 0;
@@ -25,6 +31,7 @@ public abstract class Caster extends Attacker {
     public Caster(float x, float y, int width, int height, int collisionWidth, int collisionHeight, int health, int maxHealth, int stamina, int maxStamina, float speed, float attackSpeedInFrames, float castSpeed) {
         super(x, y, width, height, collisionWidth, collisionHeight, health, maxHealth, stamina, maxStamina, speed, attackSpeedInFrames);
         setCastSpeed(castSpeed);
+        event = new EntityMagicCastEvent(this);
     }
 
     @Override
@@ -45,6 +52,7 @@ public abstract class Caster extends Attacker {
                 setCasting(false);
 
                 // Cast the fireball after animation is over
+                event.setCastType(EntityMagicCastEvent.POST);
                 Fireball fireball = new Fireball(tempX, tempY, 32, 32, 32, 32, 150, getDirection());
                 EntityManager.getInstance().addEntity(fireball);
                 tempX = 0;
@@ -83,6 +91,9 @@ public abstract class Caster extends Attacker {
                         tempY = getY() - 32;
                         break;
                 }
+
+                event.setCastType(EntityMagicCastEvent.PRE);
+                EventManager.getInstance().invokeEventMethods(event);
             }
 
         }

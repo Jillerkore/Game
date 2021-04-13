@@ -1,7 +1,9 @@
 package me.dev.killerjore.event.listeners;
 
 import me.dev.killerjore.event.listeners.entities.EntityAttackListener;
+import me.dev.killerjore.event.listeners.entities.EntityMagicCastListener;
 import me.dev.killerjore.event.listeners.entities.EntityWeaponSwingListener;
+import me.dev.killerjore.event.listeners.player.PlayerItemDropListener;
 import me.dev.killerjore.event.listeners.player.PlayerItemPickupListener;
 import me.dev.killerjore.event.listeners.player.PlayerMoveListener;
 import me.dev.killerjore.event.listeners.projectiles.ProjectileCollideWithEntityListener;
@@ -23,6 +25,7 @@ public class ListenerList {
         classes.add(new EntityAttackListener());
         classes.add(new PlayerMoveListener());
         classes.add(new EntityWeaponSwingListener());
+        classes.add(new EntityMagicCastListener());
 
         // Projectiles
         classes.add(new ProjectileCollideWithTileListener());
@@ -30,5 +33,6 @@ public class ListenerList {
 
         //Inventory
         classes.add(new PlayerItemPickupListener());
+        classes.add(new PlayerItemDropListener());
     }
 }

@@ -16,9 +16,11 @@ public class InputHandler implements InputProcessor {
 
     private EntityManager entities;
     private GameScreen screen;
+    private Vector3 screenCoords;
 
     public InputHandler(GameScreen screen) {
         entities = EntityManager.getInstance();
+        screenCoords = new Vector3();
         this.screen = screen;
     }
 
@@ -81,15 +83,17 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        Vector3 coords = screen.getUiCamera().unproject(new Vector3(screenX, screenY, 0));
-        UIManager.getInstance().clickEvent((int)coords.x, (int)coords.y, button);
+        screenCoords.set(screenX, screenY, 0);
+        screenCoords = screen.getUiCamera().unproject(screenCoords);
+        UIManager.getInstance().clickEvent((int)screenCoords.x, (int)screenCoords.y, button);
         return true;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        Vector3 coords = screen.getUiCamera().unproject(new Vector3(screenX, screenY, 0));
-        UIManager.getInstance().unClickEvent((int)coords.x, (int)coords.y, button);
+        screenCoords.set(screenX, screenY, 0);
+        screenCoords = screen.getUiCamera().unproject(screenCoords);
+        UIManager.getInstance().unClickEvent((int)screenCoords.x, (int)screenCoords.y, button);
         return true;
     }
 

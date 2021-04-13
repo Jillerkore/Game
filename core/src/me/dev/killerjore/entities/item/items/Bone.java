@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import me.dev.killerjore.entities.item.Item;
 import me.dev.killerjore.entities.item.ItemId;
+import me.dev.killerjore.entities.item.ItemType;
 import me.dev.killerjore.textureRepository.TextureManager;
 
 public class Bone extends Item {
@@ -24,5 +25,6 @@ public class Bone extends Item {
     @Override
     public void initializeId() {
         id = ItemId.BONE;
+        itemType = ItemType.MISC;
     }
 }
